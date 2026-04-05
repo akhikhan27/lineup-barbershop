@@ -21,6 +21,12 @@ return function (ContainerBuilder $containerBuilder) {
                     'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
                     'level' => Logger::DEBUG,
                 ],
+                'db' => [
+                    'host'=> 'localhots',
+                    'dbname'=> 'lineup',
+                    'user'=> 'lineup_user',
+                    'password'=> 'lineup',
+                ],
             ]);
         }
     ]);
