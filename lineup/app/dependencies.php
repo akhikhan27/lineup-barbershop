@@ -32,5 +32,8 @@ return function (ContainerBuilder $containerBuilder) {
             $dsn = "mysql:host={$dbSettings['host']};dbname={$dbSettings['dbname']};charset=utf8";
             return new PDO($dsn, $dbSettings['user'], $dbSettings['password']);
         },
+        'view'=> function (ContainerInterface $c) {
+            return \Slim\Views\Twig::create(__DIR__ .'/../src/Views',['cache' => false]);
+        },
     ]);
 };
