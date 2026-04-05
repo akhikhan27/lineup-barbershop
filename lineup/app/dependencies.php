@@ -26,5 +26,11 @@ return function (ContainerBuilder $containerBuilder) {
 
             return $logger;
         },
+        PDO::class => function (ContainerInterface $c) {
+            $settings = $c->get(SettingsInterface::class);
+            $dbSettings = $settings->get('db');
+            $dsn = "mysql:host={$dbSettings['host']};dbname={$dbSettings['dbname']};charset=utf8";
+            return new PDO($dsn, $dbSettings['user'], $dbSettings['password']);
+        },
     ]);
 };
