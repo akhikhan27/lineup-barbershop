@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use Slim\Views\Twig;
+use Lineup\Src\Application\Actions\AuthActions;
 
 return function (App $app) {
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
@@ -30,6 +31,11 @@ return function (App $app) {
         $view = Twig::fromRequest($request);
         return $view->render($response, 'register.twig');
     });
+
+    $app->post('/login', [AuthActions::class, 'login']);
+    $app->post('/register', [AuthActions::class, 'register']);
+    $app->get('/logout', [AuthActions::class, 'logout']);
+
 
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);
