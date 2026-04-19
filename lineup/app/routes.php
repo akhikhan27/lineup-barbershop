@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use Slim\Views\Twig;
-use Lineup\Src\Application\Actions\AuthActions;
+use App\Application\Actions\AuthActions;
 
 return function (App $app) {
     $app->options('/{routes:.*}', function (Request $request, Response $response) {
@@ -41,4 +41,16 @@ return function (App $app) {
         $group->get('', ListUsersAction::class);
         $group->get('/{id}', ViewUserAction::class);
     });
+
+    $adminMiddleware = function (Request $request, Response $response, $next) {
+    if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
+        return $response->withHeader('Location', '/login')->withStatus(302);
+    }
+    return $next($request, $response);
+    };
+
+    $app->group('/admin', function (Group $group) {
+    //$group->get('/dashboard', [AdminController::class, 'dashboard']);
+    //other admin routes
+    })->add($adminMiddleware);
 };

@@ -22,7 +22,7 @@ return function (ContainerBuilder $containerBuilder) {
                     'level' => Logger::DEBUG,
                 ],
                 'db' => [
-                    'host'=> 'localhots',
+                    'host'=> 'localhost',
                     'dbname'=> 'lineup',
                     'user'=> 'lineup_user',
                     'password'=> 'lineup',
