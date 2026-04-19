@@ -1,5 +1,5 @@
 <?php
-namespace Lineup\Src\Application\Actions;
+namespace App\Application\Actions;
 
 use PDO;
 use PDOException;
@@ -10,6 +10,7 @@ Class AuthActions{
   private PDO $pdo;
   public function __construct(PDO $pdo) { $this->pdo = $pdo; }
   public function login(Request $request, Response $response) : Response {
+    session_start();
     $data = $request->getParsedBody();
     $email = trim($data['email'] ?? '');
     $password = $data['password'] ?? '';
@@ -21,7 +22,7 @@ Class AuthActions{
 
     if ($user && password_verify($password, $user['password'])) {
       session_regenerate_id(true);
-      $_SESSION['user'] = $user['email'];
+      $_SESSION['user'] = $user;
 
     
       return $response->withHeader('Location', '/')->withStatus(302);
@@ -36,8 +37,8 @@ public function register(Request $request, Response $response) : Response {
   $data = $request->getParsedBody();
   $email = trim($data['email'] ?? '');
   $password = $data['password'] ?? '';
-  $firstName = trim($data['first_name'] ??'');
-  $lastName = trim($data['last_name'] ??'');
+  $firstName = trim($data['firstName'] ??'');
+  $lastName = trim($data['lastName'] ??'');
   $phoneNumber = trim($data['phoneNumber'] ??'');
   $error = null;
 
