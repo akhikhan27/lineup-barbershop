@@ -22,6 +22,11 @@ return function (App $app) {
         return $view->render($response, 'home.twig');
     });
 
+    $app->get('/services', function (Request $request, Response $response) {
+        $view = Twig::fromRequest($request);
+        return $view->render($response,'services.twig');
+    });
+
     $app->get('/login', function (Request $request, Response $response) {
         $view = Twig::fromRequest($request);
         return $view->render($response, 'login.twig');
@@ -59,4 +64,6 @@ return function (App $app) {
     //$group->get('/dashboard', [AdminController::class, 'dashboard']);
     //other admin routes
     })->add($adminMiddleware);
+
+    
 };
