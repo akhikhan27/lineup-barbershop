@@ -32,8 +32,13 @@ return function (ContainerBuilder $containerBuilder) {
             $dsn = "mysql:host={$dbSettings['host']};dbname={$dbSettings['dbname']};charset=utf8";
             return new PDO($dsn, $dbSettings['user'], $dbSettings['password']);
         },
-        'view'=> function (ContainerInterface $c) {
-            return \Slim\Views\Twig::create(__DIR__ .'/../src/Views',['cache' => false]);
+        'view' => function (ContainerInterface $c) {
+            $twig = \Slim\Views\Twig::create(__DIR__ . '/../src/Views', ['cache' => false]);
+            $twig->getEnvironment()->addGlobal('session', $_SESSION ?? []);
+            return $twig;
         },
+        \Slim\Views\Twig::class => function (ContainerInterface $c) {
+            return $c->get('view');
+},
     ]);
 };
