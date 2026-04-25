@@ -23,8 +23,11 @@ return function (App $app) {
     });
 
     $app->get('/services', function (Request $request, Response $response) {
+        $stmt = $this->get(PDO::class)->prepare('SELECT * FROM services');
+        $stmt->execute();
+        $services = $stmt->fetchAll();
         $view = Twig::fromRequest($request);
-        return $view->render($response,'services.twig');
+        return $view->render($response,'services.twig',['services' => $services]);
     });
 
     $app->get('/login', function (Request $request, Response $response) {
@@ -37,12 +40,12 @@ return function (App $app) {
         return $view->render($response, 'register.twig');
     });
 
-    $app->get('/register-admin', function (Request $request, Response $response) {
+    $app->get('/admin/register', function (Request $request, Response $response) {
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'register-admin.twig');
+        return $view->render($response, '/admin/register.twig');
     });
 
-    $app->post('/register-admin', [AuthActions::class, 'register-admin']);
+    $app->post('/admin/register', [AuthActions::class, 'register']);
     $app->post('/login', [AuthActions::class, 'login']);
     $app->post('/register', [AuthActions::class, 'register']);
     $app->get('/logout', [AuthActions::class, 'logout']);
@@ -61,7 +64,7 @@ return function (App $app) {
     };
 
     $app->group('/admin', function (Group $group) {
-    //$group->get('/dashboard', [AdminController::class, 'dashboard']);
+    //$group->get('/services', [AdminController::class, 'dashboard']);
     //other admin routes
     })->add($adminMiddleware);
 
