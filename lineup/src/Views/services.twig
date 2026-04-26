@@ -28,7 +28,7 @@
                     <button type="submit" class="btn btn-sm btn-outline-secondary">Delete</button>
                   </form>
                 {% else %}
-                  <a href="/book" class="btn btn-sm btn-outline-secondary">Book</a>
+                  <a href="/book?service_id={{ service.id }}" class="btn btn-sm btn-outline-secondary">Book</a>
                 {% endif %}
                 </div>
                 <small class="text-muted">${{ service.price }}</small>
