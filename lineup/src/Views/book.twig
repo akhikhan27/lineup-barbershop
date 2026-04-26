@@ -1,0 +1,37 @@
+{% extends 'base.twig' %}
+{% block title %}Booking{% endblock %}
+{% block content %}
+<script src="/scripts/calender.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class="book-page">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Book appointment</h3>
+			</div>
+			<div class="card-body">
+				<form action="/book" method="post">
+					<div class="input-group form-group">
+                        <input name="date" type="date" placeholder="Appointment Date" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+					</div>
+					<div class="input-group form-group">
+                        <input type="hidden" name="service_id" value="{{ service_id }}">
+                    </div>
+					<div class="form-group">
+                        <select name="time" class="form-control" required>
+                            <option value="">Select a time</option>
+                            {% for slot in slots %}
+                            <option value="{{ slot }}">{{ slot|date('g:i A') }}</option>
+                            {% endfor %}
+                        </select>
+					</div>
+                    <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Book</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{% endblock %}
