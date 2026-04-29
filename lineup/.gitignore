@@ -5,3 +5,7 @@
 /logs/*
 !/logs/README.md
 .phpunit.result.cache
+/var/
+/tests/
+/src/Domain/
+/src/Infrastructure/

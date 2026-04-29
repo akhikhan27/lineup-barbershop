@@ -11,6 +11,9 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use Slim\Views\Twig;
 use App\Application\Actions\AuthActions;
 use App\Application\Actions\AppointmentActions;
+use App\Application\Actions\Admin\ServiceActions;
+use App\Application\Actions\Admin\BarberActions;
+use App\Application\Actions\Admin\AdminAppointmentActions;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 return function (App $app) {
@@ -66,7 +69,7 @@ return function (App $app) {
         return $view->render($response, '/admin/register.twig');
     });
 
-    $app->post('/admin/register', [AuthActions::class, 'register']);
+    $app->post('/admin/register', [AuthActions::class, 'registerAdmin']);
     $app->post('/login', [AuthActions::class, 'login']);
     $app->post('/register', [AuthActions::class, 'register']);
     $app->get('/logout', [AuthActions::class, 'logout']);
@@ -77,10 +80,12 @@ return function (App $app) {
         $group->get('/{id}', ViewUserAction::class);
     });
 
-    $app->group('/admin', function (Group $group) {
-    //$group->get('/services', [AdminController::class, 'dashboard']);
-    //other admin routes
+   $app->group('/admin', function (Group $group) {
+    $group->get('/services', [ServiceActions::class, 'getServices']);
+    $group->get('/services/edit/{id}', [ServiceActions::class, 'editServiceForm']);
+    $group->post('/services/edit/{id}', [ServiceActions::class, 'editService']);
+    $group->post('/services/delete/{id}', [ServiceActions::class, 'deleteService']);
+    $group->get('/services/add', [ServiceActions::class, 'addServiceForm']);
+    $group->post('/services/add', [ServiceActions::class, 'addService']);
     })->add($adminMiddleware);
-
-    
 };
