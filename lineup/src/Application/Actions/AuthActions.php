@@ -54,6 +54,12 @@ public function register(Request $request, Response $response) : Response {
       try {
         $stmt = $this->pdo->prepare('INSERT INTO users (email, password, firstName, lastName, phoneNumber) VALUES (?, ?, ?, ?, ?)');
         $stmt->execute([$email, $hash, $firstName, $lastName, $phoneNumber]);
+        $userId = $this->pdo->lastInsertId();
+        $_SESSION['user'] = [
+          'id' => $userId,
+          'email' => $email,
+          'role' => 'customer'
+        ];
         return $response->withHeader('Location', '/')->withStatus(302);
       } catch (PDOException $e) {
           $error = 'That email is already registered.';
@@ -83,15 +89,21 @@ public function registerAdmin(Request $request, Response $response) : Response {
     else {
       $hash = password_hash($password, PASSWORD_DEFAULT);
       try {
-        $stmt = $this->pdo->prepare('INSERT INTO users (email, password, firstName, lastName, phoneNumber,role) VALUES (?, ?, ?, ?, ?,?)');
+        $stmt = $this->pdo->prepare('INSERT INTO users (email, password, firstName, lastName, phoneNumber, role) VALUES (?, ?, ?, ?, ?,?)');
         $stmt->execute([$email, $hash, $firstName, $lastName, $phoneNumber, $role]);
+        $userId = $this->pdo->lastInsertId();
+        $_SESSION['user'] = [
+          'id' => $userId,
+          'email' => $email,
+          'role' => 'admin'
+        ];
         return $response->withHeader('Location', '/')->withStatus(302);
       } catch (PDOException $e) {
           $error = 'That email is already registered.';
       }
     }
     $view = Twig::fromRequest($request);
-    return $view->render($response, 'register-admin.twig');
+    return $view->render($response, '/admin/register.twig');
 }
 
 public function logout(Request $request, Response $response) : Response {

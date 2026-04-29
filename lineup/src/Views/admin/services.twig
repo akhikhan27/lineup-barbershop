@@ -1,5 +1,51 @@
 {% extends 'base.twig' %}
-{% block title %}Admin Services{% endblock %}
+{% block title %}Edit Service{% endblock %}
 {% block content %}
-
+<div class="services-page">
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-bold">Edit Service</h1>
+      </div>
+    </div>
+  </section>
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <form action="/admin/services/edit/{{ service.id }}" method="post">
+                <div class="mb-3">
+                  <label class="form-label">Service Name</label>
+                  <input type="text" name="name" class="form-control" value="{{ service.name }}" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Description</label>
+                  <textarea name="description" class="form-control" rows="3" required>{{ service.description }}</textarea>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Price</label>
+                  <input type="number" name="price" step="0.01" class="form-control" value="{{ service.price }}" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Category</label>
+                  <select name="category_id" class="form-control" required>
+                    {% for category in categories %}
+                      <option value="{{ category.id }}" {% if category.id == service.category_id %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <a href="/services" class="btn btn-outline-secondary">Cancel</a>
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
