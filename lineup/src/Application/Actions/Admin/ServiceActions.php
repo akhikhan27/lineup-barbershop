@@ -15,11 +15,13 @@ Class ServiceActions
 
     public function __construct(PDO $pdo){ $this->pdo = $pdo; }
 
-    public function getServices(): array
+    public function getServices(Request $request, Response $response): Response
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM services ORDER BY ASC');
+        $stmt = $this->pdo->prepare('SELECT * FROM services ORDER BY name ASC');
         $stmt->execute();
-        return $stmt->fetchAll();
+        $services = $stmt->fetchAll();
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'admin/services.twig', ['services' => $services]);
     }
 
     public function addService(Request $request, Response $response): Response
@@ -30,7 +32,7 @@ Class ServiceActions
         $price = $data['price'] ?? 0;
         $categoryId = $data['category_id'] ?? '';
 
-        $stmt = $this->pdo->prepare('INSERT INTO services (name,description,price,category_id) VALUES (?,?,?,?,?)');
+        $stmt = $this->pdo->prepare('INSERT INTO services (name,description,price,category_id) VALUES (?,?,?,?)');
         $stmt->execute([$name, $description, $price, $categoryId]);
 
         return $response->withHeader('Location','/admin/services')->withStatus(302);
