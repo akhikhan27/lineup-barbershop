@@ -64,12 +64,6 @@ return function (App $app) {
         return $view->render($response, 'register.twig');
     });
 
-    $app->get('/admin/register', function (Request $request, Response $response) {
-        $view = Twig::fromRequest($request);
-        return $view->render($response, '/admin/register.twig');
-    });
-
-    $app->post('/admin/register', [AuthActions::class, 'registerAdmin']);
     $app->post('/login', [AuthActions::class, 'login']);
     $app->post('/register', [AuthActions::class, 'register']);
     $app->get('/logout', [AuthActions::class, 'logout']);
