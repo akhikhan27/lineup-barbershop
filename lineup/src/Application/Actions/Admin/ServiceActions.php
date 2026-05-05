@@ -51,6 +51,7 @@ Class ServiceActions
         $stmt->execute([$name, $description, $price, $categoryId, $id]);
         return $response->withHeader('Location','/admin/services')->withStatus(302);
     }
+    
     public function deleteService(Request $request, Response $response, array $args): Response
     {
         $id = $args['id'];
