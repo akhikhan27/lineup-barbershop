@@ -23,3 +23,10 @@
 /app/Config/core.php
 /app/Config/database.php
 /vendors/*
+/var/*
+/tests/*
+/src/Infrastructure/*
+/src/Domain/*
+/src/Application/Handlers/*
+/src/Application/ResponseEmitter/*
+/src/Application/Settings/*

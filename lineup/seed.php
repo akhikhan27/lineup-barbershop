@@ -1,13 +1,67 @@
 <?php
-// seed.php — run with: php seed.php
-
 $host = 'localhost';
 $dbname = 'lineup';
 $user = 'lineup_user';
-$password = 'yourpassword';
+$password = 'lineup';
 
 $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// Create tables if they don't exist
+$pdo->exec("CREATE TABLE IF NOT EXISTS categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+)");
+
+$pdo->exec("CREATE TABLE IF NOT EXISTS services (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    category_id INT NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES categories(id)
+)");
+
+$pdo->exec("CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    firstName VARCHAR(100) NOT NULL,
+    lastName VARCHAR(100) NOT NULL,
+    phoneNumber VARCHAR(20),
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    2fa_secret VARCHAR(255),
+    role ENUM('admin', 'customer') DEFAULT 'customer'
+)");
+
+$pdo->exec("CREATE TABLE IF NOT EXISTS barbers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    firstName VARCHAR(100) NOT NULL,
+    lastName VARCHAR(100) NOT NULL,
+    bio TEXT,
+    photo VARCHAR(255)
+)");
+
+$pdo->exec("CREATE TABLE IF NOT EXISTS appointments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    barber_id INT NULL,
+    service_id INT NOT NULL,
+    date DATE NOT NULL,
+    time TIME NOT NULL,
+    status ENUM('pending', 'confirmed', 'completed', 'cancelled') DEFAULT 'pending',
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (service_id) REFERENCES services(id)
+)");
+
+$pdo->exec("CREATE TABLE IF NOT EXISTS reviews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    appointment_id INT NOT NULL UNIQUE,
+    comment TEXT,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (appointment_id) REFERENCES appointments(id)
+)");
 
 // Clear existing data
 $pdo->exec('SET FOREIGN_KEY_CHECKS = 0');

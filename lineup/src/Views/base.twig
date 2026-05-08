@@ -24,9 +24,12 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         {% block navlinks %}
-                        {% if session.user is defined %}
+                        {% if session.user is defined and sesstion.user.role == 'customer' %}
                             <li class="nav-item"><a class="nav-link" href="/appointments">Appointments</a></li>
                             <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
+                        {% elseif session.user is defined and session.user.role == 'admin' %}
+                            <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/admin/dashboard">Dashboard</a></li>
                         {% else %}
                             <li class="nav-item"><a class="nav-link" href="/login">Log in</a></li>
                             <li class="nav-item"><a class="nav-link" href="/register">Sign up</a></li>

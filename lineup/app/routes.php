@@ -75,11 +75,22 @@ return function (App $app) {
     });
 
    $app->group('/admin', function (Group $group) {
+    //Services routes
     $group->get('/services', [ServiceActions::class, 'getServices']);
     $group->get('/services/edit/{id}', [ServiceActions::class, 'editServiceForm']);
     $group->post('/services/edit/{id}', [ServiceActions::class, 'editService']);
     $group->post('/services/delete/{id}', [ServiceActions::class, 'deleteService']);
     $group->get('/services/add', [ServiceActions::class, 'addServiceForm']);
     $group->post('/services/add', [ServiceActions::class, 'addService']);
+    //Barbers routes
+    $group->get('/barbers', [BarberActions::class, 'getBarbers']);
+    $group->get('/barbers/edit/{id}', [BarberActions::class, 'editBarberForm']);
+    $group->post('/barbers/edit/{id}', [BarberActions::class, 'editBarber']);   
+    $group->post('/barbers/delete/{id}', [BarberActions::class, 'deleteBarber']);
+    $group->get('/barbers/add', [BarberActions::class, 'addBarberForm']);
+    $group->post('/barbers/add', [BarberActions::class, 'addBarber']);    
+    //Appointment routes
+    $group->get('/dashboard',[AdminAppointmentActions::class, 'getAppointments']);
+    $group->post('/dashboard',[AdminAppointmentActions::class,'updateStatus']);
     })->add($adminMiddleware);
 };

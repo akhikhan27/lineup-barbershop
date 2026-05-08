@@ -57,7 +57,7 @@ Class ServiceActions
         $id = $args['id'];
         $stmt = $this->pdo->prepare('DELETE FROM services WHERE id = ?');
         $stmt->execute([$id]);   
-        return $response->withHeader('Location','/admin/services')->withStatus(302);
+        return $response->withHeader('Location','/services')->withStatus(302);
     }
 
     public function addServiceForm(Request $request, Response $response): Response
