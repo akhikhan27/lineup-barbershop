@@ -80,7 +80,7 @@ Class ServiceActions
         $categories = $stmt2->fetchAll();
     
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'admin/edit-service.twig', ['service' => $service, 'categories' => $categories]);
+        return $view->render($response, 'admin/edit-services.twig', ['service' => $service, 'categories' => $categories]);
     }
 
 }

@@ -74,7 +74,12 @@ return function (App $app) {
         $group->get('/{id}', ViewUserAction::class);
     });
 
+
    $app->group('/admin', function (Group $group) {
+    $group->get('/dashboard', function (Request $request, Response $response) {
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'admin/dashboard.twig');
+    });
     //Services routes
     $group->get('/services', [ServiceActions::class, 'getServices']);
     $group->get('/services/edit/{id}', [ServiceActions::class, 'editServiceForm']);
@@ -90,7 +95,7 @@ return function (App $app) {
     $group->get('/barbers/add', [BarberActions::class, 'addBarberForm']);
     $group->post('/barbers/add', [BarberActions::class, 'addBarber']);    
     //Appointment routes
-    $group->get('/dashboard',[AdminAppointmentActions::class, 'getAppointments']);
-    $group->post('/dashboard',[AdminAppointmentActions::class,'updateStatus']);
+    $group->get('/appointments',[AdminAppointmentActions::class, 'getAppointments']);
+    $group->post('/appointments/edit/{id}',[AdminAppointmentActions::class,'updateStatus']);
     })->add($adminMiddleware);
 };
