@@ -9,7 +9,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
 
-Class DashboardActions{
+Class DashboardActions
+{
+    private PDO $pdo;
+
+    public function __construct(PDO $pdo){ $this->pdo = $pdo; }
+
     public function getDashboard(Request $request, Response $response): Response
     {
         $stmt = $this->pdo->prepare('SELECT * FROM barbers ORDER BY lastName ASC');

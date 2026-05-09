@@ -9,11 +9,13 @@ use Slim\Views\Twig;
 Class AuthActions{
   private PDO $pdo;
   public function __construct(PDO $pdo) { $this->pdo = $pdo; }
+
   public function login(Request $request, Response $response) : Response {
     $data = $request->getParsedBody();
     $email = trim($data['email'] ?? '');
     $password = $data['password'] ?? '';
     $error = null;
+    $role = $_SESSION['user']['role'] ?? 'customer';
 
     $stmt = $this->pdo->prepare('SELECT * FROM users WHERE email = ?');
     $stmt->execute([$email]);
@@ -23,13 +25,15 @@ Class AuthActions{
       session_regenerate_id(true);
       $_SESSION['user'] = $user;
 
-    
-      return $response->withHeader('Location', '/')->withStatus(302);
+      if ($user['role'] ==='admin'){
+        return $response->withHeader('Location', '/admin/dashboard')->withStatus(302);
+      } else{
+        return $response->withHeader('Location', '/')->withStatus(302);
+      }
     }
     $error = 'Invalid email or password.';
     $view = Twig::fromRequest($request);
     return $view->render($response, 'login.twig');
-
 }
 
 public function register(Request $request, Response $response) : Response {
