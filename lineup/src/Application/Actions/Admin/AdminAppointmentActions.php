@@ -14,15 +14,6 @@ Class AdminAppointmentActions
     private PDO $pdo;
 
     public function __construct(PDO $pdo){ $this->pdo = $pdo; }
-
-    public function getAppointments(Request $request, Response $response): Response
-    {
-        $stmt = $this->pdo->prepare('SELECT * FROM appointments ORDER BY date ASC, time ASC');
-        $stmt->execute();
-        $appointments = $stmt->fetchAll();
-        $view = Twig::fromRequest($request);
-        return $view->render($response, 'admin/dashboard.twig', ['appointments' => $appointments]);
-    }
     
     public function updateStatus(Request $request, Response $response, array $args): Response
     {

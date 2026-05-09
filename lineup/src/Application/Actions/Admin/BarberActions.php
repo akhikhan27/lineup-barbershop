@@ -15,14 +15,6 @@ Class BarberActions
 
     public function __construct(PDO $pdo){ $this->pdo = $pdo; }
 
-    public function getBarbers(Request $request, Response $response): Response
-    {
-        $stmt = $this->pdo->prepare('SELECT * FROM barbers ORDER BY lastName ASC');
-        $stmt->execute();
-        $barbers = $stmt->fetchAll();
-        $view = Twig::fromRequest($request);
-        return $view->render($response, 'admin/dashboard.twig', ['barbers' => $barbers]);
-    }
     public function addBarber(Request $request, Response $response): Response
     {
         $data = $request->getParsedBody();

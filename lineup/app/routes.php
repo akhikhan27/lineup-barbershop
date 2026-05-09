@@ -14,6 +14,7 @@ use App\Application\Actions\AppointmentActions;
 use App\Application\Actions\Admin\ServiceActions;
 use App\Application\Actions\Admin\BarberActions;
 use App\Application\Actions\Admin\AdminAppointmentActions;
+use App\Application\Actions\Admin\DashboardActions;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 return function (App $app) {
@@ -76,10 +77,8 @@ return function (App $app) {
 
 
    $app->group('/admin', function (Group $group) {
-    $group->get('/dashboard', function (Request $request, Response $response) {
-        $view = Twig::fromRequest($request);
-        return $view->render($response, 'admin/dashboard.twig');
-    });
+    //Dashboard Route
+    $group->get('/dashboard', [DashboardActions::class, 'getDashboard']);
     //Services routes
     $group->get('/services', [ServiceActions::class, 'getServices']);
     $group->get('/services/edit/{id}', [ServiceActions::class, 'editServiceForm']);
@@ -88,14 +87,12 @@ return function (App $app) {
     $group->get('/services/add', [ServiceActions::class, 'addServiceForm']);
     $group->post('/services/add', [ServiceActions::class, 'addService']);
     //Barbers routes
-    $group->get('/barbers', [BarberActions::class, 'getBarbers']);
-    $group->get('/barbers/edit/{id}', [BarberActions::class, 'editBarberForm']);
-    $group->post('/barbers/edit/{id}', [BarberActions::class, 'editBarber']);   
-    $group->post('/barbers/delete/{id}', [BarberActions::class, 'deleteBarber']);
-    $group->get('/barbers/add', [BarberActions::class, 'addBarberForm']);
-    $group->post('/barbers/add', [BarberActions::class, 'addBarber']);    
+    $group->get('/dashboard/barbers/edit/{id}', [BarberActions::class, 'editBarberForm']);
+    $group->post('/dashboard/barbers/edit/{id}', [BarberActions::class, 'editBarber']);   
+    $group->post('/dashboard/barbers/delete/{id}', [BarberActions::class, 'deleteBarber']);
+    $group->get('/dashboard/barbers/add', [BarberActions::class, 'addBarberForm']);
+    $group->post('/dashboard/barbers/add', [BarberActions::class, 'addBarber']);    
     //Appointment routes
-    $group->get('/appointments',[AdminAppointmentActions::class, 'getAppointments']);
-    $group->post('/appointments/edit/{id}',[AdminAppointmentActions::class,'updateStatus']);
+    $group->post('/dashboard/appointment/status/{id}',[AdminAppointmentActions::class,'updateStatus']);
     })->add($adminMiddleware);
 };
