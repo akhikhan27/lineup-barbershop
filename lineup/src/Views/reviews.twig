@@ -1,7 +1,6 @@
 {% extends 'base.twig' %}
 {% block title %}Review{% endblock %}
 {% block content %}
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <div class="book-page">
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
@@ -9,7 +8,7 @@
 				<h3>Leave a review</h3>
 			</div>
 			<div class="card-body">
-				<form action="/review" method="post">
+				<form action="/reviews/{{ appointment_id }}" method="post">
                     <div class="star-rating">
                         <input type="radio" name="rating" id="star5" value="5">
                         <label for="star5">&#9733;</label>

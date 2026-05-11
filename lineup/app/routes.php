@@ -59,7 +59,7 @@ return function (App $app) {
     $app->get('/appointments', [AppointmentActions::class, 'getAppointments'])->add($userMiddleware);
 
     $app->get('/reviews/{id}', [ReviewActions::class, 'showReviewForm'])->add($userMiddleware);
-    $app->post('/reviews{id}', [ReviewActions::class, 'submitReview'])->add($userMiddleware);
+    $app->post('/reviews/{id}', [ReviewActions::class, 'submitReview'])->add($userMiddleware);
 
 
     $app->get('/login', function (Request $request, Response $response) {

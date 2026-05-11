@@ -22,7 +22,7 @@
               <p class="card-text"><strong>Status:</strong> {{ appointment.status }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  {% if appointment.status == 'completed' %}
+                  {% if appointment.status == 'completed' and appointment_review_id is null %}
                     <a href="/reviews/{{ appointment.id }}" class="btn btn-sm btn-outline-success">Leave Review</a>
                   {% endif %}
                 </div>

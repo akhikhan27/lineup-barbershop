@@ -39,10 +39,12 @@ Class AppointmentActions{
 
     public function getAppointments(Request $request, Response $response) : Response {
         $userId = $_SESSION['user']['id'];
-        $stmt = $this->pdo->prepare('SELECT appointments.*, services.name as service_name
-                                    FROM appointments JOIN services on appointments.service_id = services.id
-                                    WHERE appointments.user_id = ?
-                                    ORDER BY date ASC, time ASC');
+        $stmt = $this->pdo->prepare('SELECT appointments.*, services.name as service_name, reviews.id as review_id
+                                        FROM appointments 
+                                        JOIN services ON appointments.service_id = services.id 
+                                        LEFT JOIN reviews ON appointments.id = reviews.appointment_id
+                                        WHERE appointments.user_id = ?
+                                        ORDER BY date ASC, time ASC');
         $stmt->execute([$userId]);
         $appointments = $stmt->fetchAll();
         $view = Twig::fromRequest($request);

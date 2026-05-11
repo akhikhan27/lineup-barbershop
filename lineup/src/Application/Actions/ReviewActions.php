@@ -5,6 +5,7 @@ use PDO;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
+use PDOException;
 
 Class ReviewActions{
     private PDO $pdo;
@@ -24,9 +25,10 @@ Class ReviewActions{
         $rating = $data['rating'] ?? '';
 
         $stmt = $this->pdo->prepare('INSERT INTO reviews (user_id, comment, rating, appointment_id) VALUES (?,?,?,?)');
-        $stmt->execute([$userId,$comment,$rating,$appointmentId]);
-
-        return $response-withHeader('Location', '/appointments')->withStatus(302);
-
+        try {
+            $stmt->execute([$userId, $comment, $rating, $appointmentId]);
+        } catch (PDOException $e) {
+            return $response->withHeader('Location', '/appointments')->withStatus(302);
+        }
     }
 }

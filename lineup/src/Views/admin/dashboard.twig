@@ -84,7 +84,16 @@
               <td>{{ appointment.time }}</td>
               <td>{{ appointment.status }}</td>
               <td>
-                <a href="/admin/dashboard/appointment/status/{{ appointment.id }}" class="btn btn-sm btn-outline-secondary">Update</a>
+                <form action="/admin/dashboard/appointment/status/{{ appointment.id }}" method="post" style="display:inline">
+                  <select name="status" class="form-select form-select-sm d-inline w-auto">
+                    <option value="pending" {% if appointment.status == 'pending' %}selected{% endif %}>Pending</option>
+                    <option value="confirmed" {% if appointment.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                    <option value="completed" {% if appointment.status == 'completed' %}selected{% endif %}>Completed</option>
+                    <option value="cancelled" {% if appointment.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                  </select>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">Update</button>
+                </form>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
