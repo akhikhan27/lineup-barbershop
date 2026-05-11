@@ -22,12 +22,12 @@ return function (ContainerBuilder $containerBuilder) {
                     'level' => Logger::DEBUG,
                 ],
                 'db' => [
-                    'host'=> 'localhost',
-                    'dbname'=> 'lineup',
-                    'user'=> 'lineup_user',
-                    'password'=> 'lineup',
+                    'host'     => $_ENV['DB_HOST'] ?? 'localhost',
+                    'dbname'   => $_ENV['DB_NAME'] ?? 'lineup',
+                    'user'     => $_ENV['DB_USER'] ?? 'lineup_user',
+                    'password' => $_ENV['DB_PASSWORD'] ?? 'yourpassword',
                 ],
             ]);
         }
-    ]);
+    ]);     
 };
