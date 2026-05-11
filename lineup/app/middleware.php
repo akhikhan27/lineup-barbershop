@@ -8,7 +8,7 @@ use Slim\App;
 use Slim\Views\TwigMiddleware;
 
 return function (App $app) {
-    $app->add(TwigMiddleware::create($app, $app->getContainer()->get('view')));
-    $app->add(TranslationMiddleware::class);
     $app->add(SessionMiddleware::class);
+    $app->add(TranslationMiddleware::class);
+    $app->add(TwigMiddleware::create($app, $app->getContainer()->get('view')));
 };
