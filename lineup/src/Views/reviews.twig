@@ -1,5 +1,38 @@
 {% extends 'base.twig' %}
 {% block title %}Review{% endblock %}
 {% block content %}
-
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class="book-page">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Leave a review</h3>
+			</div>
+			<div class="card-body">
+				<form action="/review" method="post">
+                    <div class="star-rating">
+                        <input type="radio" name="rating" id="star5" value="5">
+                        <label for="star5">&#9733;</label>
+                        <input type="radio" name="rating" id="star4" value="4">
+                        <label for="star4">&#9733;</label>
+                        <input type="radio" name="rating" id="star3" value="3">
+                        <label for="star3">&#9733;</label>
+                        <input type="radio" name="rating" id="star2" value="2">
+                        <label for="star2">&#9733;</label>
+                        <input type="radio" name="rating" id="star1" value="1">
+                        <label for="star1">&#9733;</label>
+					</div>
+					<div class="input-group form-group">
+                        <label for="comment">Comment</label>
+                        <textarea class="form-control" id="comment" name="comment" placeholder="Write something..." style="height:200px"></textarea>
+					</div>
+					<div class="input-group form-group">
+                        <input type="hidden" name="appointment_id" value="{{ appointment_id }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Leave Review</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock %}

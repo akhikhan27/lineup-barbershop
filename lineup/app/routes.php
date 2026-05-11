@@ -11,6 +11,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 use Slim\Views\Twig;
 use App\Application\Actions\AuthActions;
 use App\Application\Actions\AppointmentActions;
+use App\Application\Actions\ReviewActions;
 use App\Application\Actions\Admin\ServiceActions;
 use App\Application\Actions\Admin\BarberActions;
 use App\Application\Actions\Admin\AdminAppointmentActions;
@@ -52,8 +53,14 @@ return function (App $app) {
         return $view->render($response,'services.twig',['services' => $services]);
     });
 
+    //User Appointments
     $app->get('/book', [AppointmentActions::class, 'showBookingForm'])->add($userMiddleware);
     $app->post('/book', [AppointmentActions::class, 'bookAppointment'])->add($userMiddleware);
+    $app->get('/appointments', [AppointmentActions::class, 'getAppointments'])->add($userMiddleware);
+
+    $app->get('/reviews/{id}', [ReviewActions::class, 'showReviewForm'])->add($userMiddleware);
+    $app->post('/reviews{id}', [ReviewActions::class, 'submitReview'])->add($userMiddleware);
+
 
     $app->get('/login', function (Request $request, Response $response) {
         $view = Twig::fromRequest($request);

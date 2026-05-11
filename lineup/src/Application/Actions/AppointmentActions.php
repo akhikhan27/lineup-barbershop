@@ -36,4 +36,17 @@ Class AppointmentActions{
     $view = Twig::fromRequest($request);
     return $view->render($response, 'book.twig', ['service_id'=> $serviceId, 'slots'=> $availableSlots, 'date'=> $selectedDate]);
     }
+
+    public function getAppointments(Request $request, Response $response) : Response {
+        $userId = $_SESSION['user']['id'];
+        $stmt = $this->pdo->prepare('SELECT appointments.*, services.name as service_name
+                                    FROM appointments JOIN services on appointments.service_id = services.id
+                                    WHERE appointments.user_id = ?
+                                    ORDER BY date ASC, time ASC');
+        $stmt->execute([$userId]);
+        $appointments = $stmt->fetchAll();
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'appointments.twig', ['appointments' => $appointments]);
+
+    }
 }
