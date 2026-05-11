@@ -86,7 +86,7 @@
             <tr>
               <td>{{ appointment.date }}</td>
               <td>{{ appointment.time }}</td>
-              <td>{{ appointment.status }}</td>
+              <td>{{ ('admin.dashboard.' ~ appointment.status)|trans }}</td>
               <td>
                 <form action="/admin/dashboard/appointment/status/{{ appointment.id }}" method="post" style="display:inline">
                   <select name="status" class="form-select form-select-sm d-inline w-auto" {% if appointment.status == 'completed' %}disabled{% endif %}>

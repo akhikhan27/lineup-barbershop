@@ -19,7 +19,7 @@
             <div class="card-body">
             <h5 class = "card-title"> {{ appointment.service_name }} </h5>
               <p class="card-text">{{ appointment.date }} at {{ appointment.time }}</p>
-              <p class="card-text"><strong>{{ 'appointments.status_label'|trans }}</strong> {{ appointment.status }}</p>
+              <p class="card-text"><strong>{{ 'appointments.status_label'|trans }}</strong> {{ ('admin.dashboard.' ~ appointment.status)|trans }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   {% if appointment.status == 'completed' and appointment.review_id is null %}
