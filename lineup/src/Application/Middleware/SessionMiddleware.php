@@ -25,7 +25,12 @@ class SessionMiddleware implements Middleware
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+
+        $flash = $_SESSION['flash'] ?? null;
+        unset($_SESSION['flash']);
+        $this->twig->getEnvironment()->addGlobal('flash', $flash);
         $this->twig->getEnvironment()->addGlobal('session', $_SESSION);
+
         return $handler->handle($request);
     }
 }

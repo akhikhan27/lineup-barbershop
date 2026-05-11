@@ -75,6 +75,7 @@ appointments:
   leave_review: Laisser un avis
   empty: Vous n'avez aucun rendez-vous pour le moment.
   browse_services: Voir les services
+  explore_services: Réserver un nouveau service
 
 review:
   title: Avis
@@ -124,6 +125,21 @@ admin:
     description: Description
     cancel: Annuler
     save_changes: Enregistrer
+
+flash:
+  success:
+    appointment_booked: Rendez-vous réservé avec succès !
+    review_created: Avis soumis avec succès !
+    barber_added: Barbier ajouté avec succès !
+    barber_updated: Barbier mis à jour avec succès !
+    barber_deleted: Barbier supprimé avec succès !
+    service_edited: Service mis à jour avec succès !
+  error:
+    barber_add_failed: Échec de l'ajout du barbier. Veuillez réessayer.
+    barber_update_failed: Échec de la mise à jour du barbier. Veuillez réessayer.
+    barber_delete_failed: Échec de la suppression du barbier. Veuillez réessayer.
+    service_edit_failed: Échec de la mise à jour du service. Veuillez réessayer.
+    review_create_failed: Échec de la soumission de l'avis. Veuillez réessayer.
 
 auth:
   error:

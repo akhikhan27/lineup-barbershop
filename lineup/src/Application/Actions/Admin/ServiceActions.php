@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types= 1);
+declare(strict_types=1);
 
 namespace App\Application\Actions\Admin;
 
@@ -8,12 +8,18 @@ use PDO;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Views\Twig;
+use Symfony\Component\Translation\Translator;
 
-Class ServiceActions
+class ServiceActions
 {
     private PDO $pdo;
+    private Translator $translator;
 
-    public function __construct(PDO $pdo){ $this->pdo = $pdo; }
+    public function __construct(PDO $pdo, Translator $translator)
+    {
+        $this->pdo = $pdo;
+        $this->translator = $translator;
+    }
 
     public function getServices(Request $request, Response $response): Response
     {
@@ -35,7 +41,7 @@ Class ServiceActions
         $stmt = $this->pdo->prepare('INSERT INTO services (name,description,price,category_id) VALUES (?,?,?,?)');
         $stmt->execute([$name, $description, $price, $categoryId]);
 
-        return $response->withHeader('Location','/admin/services')->withStatus(302);
+        return $response->withHeader('Location', '/admin/services')->withStatus(302);
     }
 
     public function editService(Request $request, Response $response, array $args): Response
@@ -45,19 +51,24 @@ Class ServiceActions
         $name = $data['name'] ?? '';
         $description = $data['description'] ?? '';
         $price = $data['price'] ?? 0;
-        $categoryId = $data['category_id'] ?? '';     
-        
-        $stmt = $this->pdo->prepare('UPDATE services SET name = ?, description = ?, price = ?, category_id = ? WHERE id = ?');
-        $stmt->execute([$name, $description, $price, $categoryId, $id]);
-        return $response->withHeader('Location','/admin/services')->withStatus(302);
+        $categoryId = $data['category_id'] ?? '';
+
+        try {
+            $stmt = $this->pdo->prepare('UPDATE services SET name = ?, description = ?, price = ?, category_id = ? WHERE id = ?');
+            $stmt->execute([$name, $description, $price, $categoryId, $id]);
+            $_SESSION['flash'] = ['type' => 'success', 'message' => $this->translator->trans('flash.success.service_edited')];
+        } catch (\Exception $e) {
+            $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('flash.error.service_edit_failed')];
+        }
+        return $response->withHeader('Location', '/admin/services')->withStatus(302);
     }
-    
+
     public function deleteService(Request $request, Response $response, array $args): Response
     {
         $id = $args['id'];
         $stmt = $this->pdo->prepare('DELETE FROM services WHERE id = ?');
-        $stmt->execute([$id]);   
-        return $response->withHeader('Location','/services')->withStatus(302);
+        $stmt->execute([$id]);
+        return $response->withHeader('Location', '/services')->withStatus(302);
     }
 
     public function addServiceForm(Request $request, Response $response): Response
@@ -72,15 +83,14 @@ Class ServiceActions
     {
         $id = $args['id'];
         $stmt = $this->pdo->prepare('SELECT * from services WHERE id = ?');
-        $stmt->execute([$id]);   
+        $stmt->execute([$id]);
         $service = $stmt->fetch();
-        
+
         $stmt2 = $this->pdo->prepare('SELECT * FROM categories');
         $stmt2->execute();
         $categories = $stmt2->fetchAll();
-    
+
         $view = Twig::fromRequest($request);
         return $view->render($response, 'admin/edit-services.twig', ['service' => $service, 'categories' => $categories]);
     }
-
 }

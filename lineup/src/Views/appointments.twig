@@ -22,7 +22,7 @@
               <p class="card-text"><strong>{{ 'appointments.status_label'|trans }}</strong> {{ appointment.status }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  {% if appointment.status == 'completed' and appointment_review_id is null %}
+                  {% if appointment.status == 'completed' and appointment.review_id is null %}
                     <a href="/reviews/{{ appointment.id }}" class="btn btn-sm btn-outline-success">{{ 'appointments.leave_review'|trans }}</a>
                   {% endif %}
                 </div>
@@ -36,6 +36,9 @@
                 <a href="/services" class="btn btn-outline-secondary">{{ 'appointments.browse_services'|trans }}</a>
             </div>
         {% endfor %}
+      </div>
+      <div class="col text-center">
+        <a href="/services" class="btn btn-outline-secondary">{{ 'appointments.explore_services'|trans }}</a>
       </div>
     </div>
   </div>

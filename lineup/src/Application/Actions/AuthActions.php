@@ -42,9 +42,8 @@ class AuthActions
                 return $response->withHeader('Location', '/')->withStatus(302);
             }
         }
-        $error = $this->translator->trans('auth.error.invalid_credentials');
-        $view = Twig::fromRequest($request);
-        return $view->render($response, 'login.twig', ['error' => $error]);
+        $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('auth.error.invalid_credentials')];
+        return $response->withHeader('Location', '/login')->withStatus(302);
     }
 
     public function register(Request $request, Response $response): Response
@@ -59,27 +58,27 @@ class AuthActions
 
         $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/';
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $error = $this->translator->trans('auth.error.invalid_email');
+            $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('auth.error.invalid_email')];
+            return $response->withHeader('Location', '/register')->withStatus(302);
         } elseif (!preg_match($pattern, $password)) {
-            $error = $this->translator->trans('auth.error.password_strength');
-        } else {
-            $hash = password_hash($password, PASSWORD_DEFAULT);
-            try {
-                $stmt = $this->pdo->prepare('INSERT INTO users (email, password, firstName, lastName, phoneNumber) VALUES (?, ?, ?, ?, ?)');
-                $stmt->execute([$email, $hash, $firstName, $lastName, $phoneNumber]);
-                $userId = $this->pdo->lastInsertId();
-                $_SESSION['user'] = [
-                'id' => $userId,
-                'email' => $email,
-                'role' => 'customer'
-                ];
-                return $response->withHeader('Location', '/')->withStatus(302);
-            } catch (PDOException $e) {
-                $error = $this->translator->trans('auth.error.email_taken');
-            }
+            $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('auth.error.password_strength')];
+            return $response->withHeader('Location', '/register')->withStatus(302);
         }
-        $view = Twig::fromRequest($request);
-        return $view->render($response, 'register.twig', ['error' => $error]);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        try {
+            $stmt = $this->pdo->prepare('INSERT INTO users (email, password, firstName, lastName, phoneNumber) VALUES (?, ?, ?, ?, ?)');
+            $stmt->execute([$email, $hash, $firstName, $lastName, $phoneNumber]);
+            $userId = $this->pdo->lastInsertId();
+            $_SESSION['user'] = [
+            'id' => $userId,
+            'email' => $email,
+            'role' => 'customer'
+            ];
+            return $response->withHeader('Location', '/')->withStatus(302);
+        } catch (PDOException $e) {
+            $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('auth.error.email_taken')];
+            return $response->withHeader('Location', '/register')->withStatus(302);
+        }
     }
 
     public function logout(Request $request, Response $response): Response

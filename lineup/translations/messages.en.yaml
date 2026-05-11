@@ -75,6 +75,7 @@ appointments:
   leave_review: Leave Review
   empty: You have no appointments booked yet.
   browse_services: Browse Services
+  explore_services: Book a new service
 
 review:
   title: Review
@@ -124,6 +125,21 @@ admin:
     description: Description
     cancel: Cancel
     save_changes: Save Changes
+
+flash:
+  success:
+    appointment_booked: Appointment booked successfully!
+    review_created: Review submitted successfully!
+    barber_added: Barber added successfully!
+    barber_updated: Barber updated successfully!
+    barber_deleted: Barber deleted successfully!
+    service_edited: Service updated successfully!
+  error:
+    barber_add_failed: Failed to add barber. Please try again.
+    barber_update_failed: Failed to update barber. Please try again.
+    barber_delete_failed: Failed to delete barber. Please try again.
+    service_edit_failed: Failed to update service. Please try again.
+    review_create_failed: Failed to submit review. Please try again.
 
 auth:
   error:
