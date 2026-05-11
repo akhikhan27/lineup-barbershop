@@ -22,11 +22,16 @@ class TranslationMiddleware implements Middleware
 
     public function process(Request $request, RequestHandler $handler): Response
     {
-        $lang = $request->getQueryParams()['lang'] ?? $_SESSION['lang'] ?? 'en';
+        $lang = $request->getQueryParams()['lang'] ?? $_SESSION['lang'] ?? $_COOKIE['lang'] ?? 'en';
         $lang = in_array($lang, ['en', 'fr']) ? $lang : 'en';
         $_SESSION['lang'] = $lang;
+        if ($request->getQueryParams()['lang'] ?? null) {
+            setcookie('lang', $lang, time() + 365 * 24 * 3600, '/');
+        }
         $this->translator->setLocale($lang);
+        $this->twig->getEnvironment()->addGlobal('current_locale', $lang);
         $this->twig->getEnvironment()->addGlobal('session', $_SESSION);
-        return $handler->handle($request);
+        $response = $handler->handle($request);
+        return $response;
     }
 }

@@ -20,18 +20,18 @@ use App\Application\Actions\SearchServicesAction;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 return function (App $app) {
-    $adminMiddleware = function (Request $request, RequestHandler $handler){
-    if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
-        $response = new Slim\Psr7\Response();
-        return $response->withHeader('Location', '/login')->withStatus(302);
-    }
-    return $handler->handle($request);
+    $adminMiddleware = function (Request $request, RequestHandler $handler) {
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
+            $response = new Slim\Psr7\Response();
+            return $response->withHeader('Location', '/login')->withStatus(302);
+        }
+        return $handler->handle($request);
     };
 
     $userMiddleware = function (Request $request, RequestHandler $handler) {
-        if (!isset($_SESSION['user'])){
+        if (!isset($_SESSION['user'])) {
             $response = new \Slim\Psr7\Response();
-            return $response->withHeader('Location','/login')->withStatus(302);
+            return $response->withHeader('Location', '/login')->withStatus(302);
         }
         return $handler->handle($request);
     };
@@ -51,7 +51,7 @@ return function (App $app) {
         $stmt->execute();
         $services = $stmt->fetchAll();
         $view = Twig::fromRequest($request);
-        return $view->render($response,'services.twig',['services' => $services]);
+        return $view->render($response, 'services.twig', ['services' => $services]);
     });
 
     $app->get('/api/services/search', SearchServicesAction::class);
@@ -69,7 +69,7 @@ return function (App $app) {
         $view = Twig::fromRequest($request);
         return $view->render($response, 'login.twig');
     });
-    
+
     $app->get('/register', function (Request $request, Response $response) {
         $view = Twig::fromRequest($request);
         return $view->render($response, 'register.twig');
@@ -86,23 +86,23 @@ return function (App $app) {
     });
 
 
-   $app->group('/admin', function (Group $group) {
-    //Dashboard Route
-    $group->get('/dashboard', [DashboardActions::class, 'getDashboard']);
-    //Services routes
-    $group->get('/services', [ServiceActions::class, 'getServices']);
-    $group->get('/services/edit/{id}', [ServiceActions::class, 'editServiceForm']);
-    $group->post('/services/edit/{id}', [ServiceActions::class, 'editService']);
-    $group->post('/services/delete/{id}', [ServiceActions::class, 'deleteService']);
-    $group->get('/services/add', [ServiceActions::class, 'addServiceForm']);
-    $group->post('/services/add', [ServiceActions::class, 'addService']);
-    //Barbers routes
-    $group->get('/dashboard/barbers/edit/{id}', [BarberActions::class, 'editBarberForm']);
-    $group->post('/dashboard/barbers/edit/{id}', [BarberActions::class, 'editBarber']);   
-    $group->post('/dashboard/barbers/delete/{id}', [BarberActions::class, 'deleteBarber']);
-    $group->get('/dashboard/barbers/add', [BarberActions::class, 'addBarberForm']);
-    $group->post('/dashboard/barbers/add', [BarberActions::class, 'addBarber']);    
-    //Appointment routes
-    $group->post('/dashboard/appointment/status/{id}',[AdminAppointmentActions::class,'updateStatus']);
+    $app->group('/admin', function (Group $group) {
+     //Dashboard Route
+        $group->get('/dashboard', [DashboardActions::class, 'getDashboard']);
+     //Services routes
+        $group->get('/services', [ServiceActions::class, 'getServices']);
+        $group->get('/services/edit/{id}', [ServiceActions::class, 'editServiceForm']);
+        $group->post('/services/edit/{id}', [ServiceActions::class, 'editService']);
+        $group->post('/services/delete/{id}', [ServiceActions::class, 'deleteService']);
+        $group->get('/services/add', [ServiceActions::class, 'addServiceForm']);
+        $group->post('/services/add', [ServiceActions::class, 'addService']);
+     //Barbers routes
+        $group->get('/dashboard/barbers/edit/{id}', [BarberActions::class, 'editBarberForm']);
+        $group->post('/dashboard/barbers/edit/{id}', [BarberActions::class, 'editBarber']);
+        $group->post('/dashboard/barbers/delete/{id}', [BarberActions::class, 'deleteBarber']);
+        $group->get('/dashboard/barbers/add', [BarberActions::class, 'addBarberForm']);
+        $group->post('/dashboard/barbers/add', [BarberActions::class, 'addBarber']);
+     //Appointment routes
+        $group->post('/dashboard/appointment/status/{id}', [AdminAppointmentActions::class,'updateStatus']);
     })->add($adminMiddleware);
 };
