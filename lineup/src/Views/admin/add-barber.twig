@@ -15,26 +15,21 @@
         <div class="col-md-6">
           <div class="card shadow-sm">
             <div class="card-body">
-              <form action="/admin/dashboard/barbers/edit/{{ barber.id }}" method="post" enctype="multipart/form-data">
+              <form action="/admin/dashboard/barbers/add" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                   <label class="form-label">{{ 'admin.edit_barber.first_name'|trans }}</label>
-                  <input type="text" name="firstName" class="form-control" value="{{ barber.firstName }}" required>
+                  <input type="text" name="firstName" class="form-control" required>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">{{ 'admin.edit_barber.last_name'|trans }}</label>
-                  <input type="text" name="lastName" class="form-control" value="{{ barber.lastName }}" required>
+                  <input type="text" name="lastName" class="form-control" required>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">{{ 'admin.edit_barber.description'|trans }}</label>
-                  <textarea name="bio" class="form-control" rows="3" required>{{ barber.bio }}</textarea>
+                  <textarea name="bio" class="form-control" rows="3" required></textarea>
                 </div>
                 <div class="mb-3">
                   <label class="form-label">Photo</label>
-                  {% if barber.photo %}
-                  <div class="mb-2">
-                    <img src="/uploads/barbers/{{ barber.photo }}" alt="{{ barber.firstName }}" style="max-width:150px;max-height:150px;object-fit:cover;border-radius:4px;">
-                  </div>
-                  {% endif %}
                   <input type="file" name="photo" class="form-control" accept="image/jpeg,image/png,image/gif,image/webp">
                 </div>
                 <div class="d-flex justify-content-between">

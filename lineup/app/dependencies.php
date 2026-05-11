@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Application\Settings\SettingsInterface;
+use App\Service\UploadService;
 use App\Twig\TranslationExtension;
 use DI\ContainerBuilder;
 use Monolog\Handler\StreamHandler;
@@ -41,6 +42,9 @@ return function (ContainerBuilder $containerBuilder) {
             $translator->addResource('yaml', __DIR__ . '/../translations/messages.en.yaml', 'en');
             $translator->addResource('yaml', __DIR__ . '/../translations/messages.fr.yaml', 'fr');
             return $translator;
+        },
+        UploadService::class => function () {
+            return new UploadService(__DIR__ . '/../public/uploads/barbers');
         },
         'view' => function (ContainerInterface $c) {
             $twig = \Slim\Views\Twig::create(__DIR__ . '/../src/Views', ['cache' => false]);
