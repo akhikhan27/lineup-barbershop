@@ -1,5 +1,5 @@
 [phases.build]
-cmds = ["composer install --no-dev --optimize-autoloader"]
+cmds = ["composer install --no-dev --optimize-autoloader", "php seed.php"]
 
 [start]
 cmd = "php -S 0.0.0.0:$PORT -t public"
