@@ -11,7 +11,12 @@
   </section>
   <div class="album py-5 bg-light">
     <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <div class="row mb-4">
+        <div class="col-md-6 mx-auto">
+          <input type="text" id="service-search" class="form-control form-control-lg" placeholder="Search services..." autocomplete="off">
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="services-container" data-admin="{{ session.user is defined and session.user.role == 'admin' ? '1' : '0' }}">
         {% for service in services %}
         <div class="col">
           <div class="card shadow-sm">
@@ -40,4 +45,5 @@
     </div>
   </div>
   </div>
+<script src="/scripts/services-search.js"></script>
 {% endblock %}

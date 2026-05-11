@@ -16,6 +16,7 @@ use App\Application\Actions\Admin\ServiceActions;
 use App\Application\Actions\Admin\BarberActions;
 use App\Application\Actions\Admin\AdminAppointmentActions;
 use App\Application\Actions\Admin\DashboardActions;
+use App\Application\Actions\SearchServicesAction;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
 return function (App $app) {
@@ -52,6 +53,8 @@ return function (App $app) {
         $view = Twig::fromRequest($request);
         return $view->render($response,'services.twig',['services' => $services]);
     });
+
+    $app->get('/api/services/search', SearchServicesAction::class);
 
     //User Appointments
     $app->get('/book', [AppointmentActions::class, 'showBookingForm'])->add($userMiddleware);
