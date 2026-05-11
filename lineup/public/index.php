@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+// TEMPORARY SEED TRIGGER - DELETE AFTER USE
+if (isset($_GET['run_seed_99'])) {
+    require __DIR__ . '/../seed.php'; 
+    echo "<h1>Seed Complete!</h1>";
+    exit;
+}
+
 use App\Application\Handlers\HttpErrorHandler;
 use App\Application\Handlers\ShutdownHandler;
 use App\Application\ResponseEmitter\ResponseEmitter;

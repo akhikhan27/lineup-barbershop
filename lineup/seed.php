@@ -1,12 +1,19 @@
 <?php
-$host = 'localhost';
-$dbname = 'lineup';
-$user = 'lineup_user';
-$password = 'lineup';
+// Use environment variables (Railway) or fallback to local defaults
+$host = getenv('DB_HOST') ?: 'localhost';
+$dbname = getenv('DB_NAME') ?: 'lineup';
+$user = getenv('DB_USER') ?: 'lineup_user';
+$password = getenv('DB_PASSWORD') ?: 'lineup';
+// Railway usually provides a PORT variable as well
+$port = getenv('DB_PORT') ?: '3306';
 
-$pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+try {
+    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // ... rest of your code ...
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
+}
 // Create tables if they don't exist
 $pdo->exec("CREATE TABLE IF NOT EXISTS categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
