@@ -1,6 +1,6 @@
 {% set page_id = 'dashboard' %}
 {% extends 'base.twig' %}
-{% block title %}Admin Dashboard{% endblock %}
+{% block title %}{{ 'admin.dashboard.title'|trans }}{% endblock %}
 {% block content %}    
 <link href="/assets/dashboard.css" rel="stylesheet">
 <div class="container-fluid">
@@ -11,25 +11,25 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">
               <span data-feather="home"></span>
-              Dashboard
+              {{ 'admin.dashboard.sidebar_dashboard'|trans }}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="file"></span>
-              Barbers
+              {{ 'admin.dashboard.sidebar_barbers'|trans }}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="shopping-cart"></span>
-              Appointments
+              {{ 'admin.dashboard.sidebar_appointments'|trans }}
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/services">
               <span data-feather="users"></span>
-              Services
+              {{ 'admin.dashboard.sidebar_services'|trans }}
             </a>
           </li>
         </ul>
@@ -39,15 +39,15 @@
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       </div>
-      <h2>Barbers</h2>
+      <h2>{{ 'admin.dashboard.barbers_heading'|trans }}</h2>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">Bio</th>
-              <th scope="col">Actions</th>
+              <th scope="col">{{ 'admin.dashboard.first_name'|trans }}</th>
+              <th scope="col">{{ 'admin.dashboard.last_name'|trans }}</th>
+              <th scope="col">{{ 'admin.dashboard.bio'|trans }}</th>
+              <th scope="col">{{ 'admin.dashboard.actions'|trans }}</th>
             </tr>
           </thead>
           <tbody>
@@ -57,24 +57,24 @@
               <td>{{ barber.lastName }}</td>
               <td>{{ barber.bio }}</td>
               <td>
-                <a href="/admin/dashboard/barbers/edit/{{ barber.id }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                <a href="/admin/dashboard/barbers/edit/{{ barber.id }}" class="btn btn-sm btn-outline-secondary">{{ 'admin.dashboard.edit'|trans }}</a>
                 <form action="/admin/dashboard/barbers/delete/{{ barber.id }}" method="post" style="display:inline">
-                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                <button type="submit" class="btn btn-sm btn-outline-danger">{{ 'admin.dashboard.delete'|trans }}</button>
                 </form>
             </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
-      <h2>Appointments</h2>
+      <h2>{{ 'admin.dashboard.appointments_heading'|trans }}</h2>
       <div class="tab-content table-responsive">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Time</th>
-              <th scope="col">Status</th>
-              <th scope="col">Update Status</th>
+              <th scope="col">{{ 'admin.dashboard.date'|trans }}</th>
+              <th scope="col">{{ 'admin.dashboard.time'|trans }}</th>
+              <th scope="col">{{ 'admin.dashboard.status'|trans }}</th>
+              <th scope="col">{{ 'admin.dashboard.update_status'|trans }}</th>
             </tr>
           </thead>
           <tbody>
@@ -86,13 +86,13 @@
               <td>
                 <form action="/admin/dashboard/appointment/status/{{ appointment.id }}" method="post" style="display:inline">
                   <select name="status" class="form-select form-select-sm d-inline w-auto" {% if appointment.status == 'completed' %}disabled{% endif %}>
-                    <option value="pending" {% if appointment.status == 'pending' %}selected{% endif %}>Pending</option>
-                    <option value="confirmed" {% if appointment.status == 'confirmed' %}selected{% endif %}>Confirmed</option>
-                    <option value="completed" {% if appointment.status == 'completed' %}selected{% endif %}>Completed</option>
-                    <option value="cancelled" {% if appointment.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                    <option value="pending" {% if appointment.status == 'pending' %}selected{% endif %}>{{ 'admin.dashboard.pending'|trans }}</option>
+                    <option value="confirmed" {% if appointment.status == 'confirmed' %}selected{% endif %}>{{ 'admin.dashboard.confirmed'|trans }}</option>
+                    <option value="completed" {% if appointment.status == 'completed' %}selected{% endif %}>{{ 'admin.dashboard.completed'|trans }}</option>
+                    <option value="cancelled" {% if appointment.status == 'cancelled' %}selected{% endif %}>{{ 'admin.dashboard.cancelled'|trans }}</option>
                   </select>
                   {% if appointment.status != 'completed' %}
-                    <button type="submit" class="btn btn-sm btn-outline-secondary">Update</button>
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">{{ 'admin.dashboard.update'|trans }}</button>
                   {% endif %}
                 </form>
               </td>

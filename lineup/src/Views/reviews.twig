@@ -1,11 +1,11 @@
 {% extends 'base.twig' %}
-{% block title %}Review{% endblock %}
+{% block title %}{{ 'review.title'|trans }}{% endblock %}
 {% block content %}
 <div class="book-page">
 	<div class="d-flex justify-content-center h-100">
 		<div class="card">
 			<div class="card-header">
-				<h3>Leave a review</h3>
+				<h3>{{ 'review.heading'|trans }}</h3>
 			</div>
 			<div class="card-body">
 				<form action="/reviews/{{ appointment_id }}" method="post">
@@ -22,13 +22,13 @@
                         <label for="star1">&#9733;</label>
 					</div>
 					<div class="input-group form-group">
-                        <label for="comment">Comment</label>
-                        <textarea class="form-control" id="comment" name="comment" placeholder="Write something..." style="height:200px"></textarea>
+                        <label for="comment">{{ 'review.comment_label'|trans }}</label>
+                        <textarea class="form-control" id="comment" name="comment" placeholder="{{ 'review.comment_placeholder'|trans }}" style="height:200px"></textarea>
 					</div>
 					<div class="input-group form-group">
                         <input type="hidden" name="appointment_id" value="{{ appointment_id }}">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Leave Review</button>
+                    <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ 'review.submit'|trans }}</button>
 				</form>
 			</div>
 		</div>

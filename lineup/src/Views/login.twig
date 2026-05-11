@@ -1,5 +1,5 @@
 {% extends 'base.twig' %}
-{% block title %}Login{% endblock %}
+{% block title %}{{ 'login.title'|trans }}{% endblock %}
 {% block navlinks %}{% endblock %}
 {% block content %}
 <div class="container-fluid">
@@ -13,21 +13,24 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10 col-xl-7 mx-auto">
-                            <h3 class="display-4">Welcome back!</h3>
+                            <h3 class="display-4">{{ 'login.welcome_back'|trans }}</h3>
+                            {% if error is defined and error %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                            {% endif %}
                             <form action="/login" method="post">
                                 <div class="form-group mb-3">
-                                    <input id="inputEmail" name="email" type="email" placeholder="Email address" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <input id="inputEmail" name="email" type="email" placeholder="{{ 'login.email_placeholder'|trans }}" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input id="inputPassword" name="password" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                    <input id="inputPassword" name="password" type="password" placeholder="{{ 'login.password_placeholder'|trans }}" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                                 </div>
                                 <div class="custom-control custom-checkbox mb-3">
                                     <input id="customCheck1" type="checkbox" checked class="custom-control-input">
-                                    <label for="customCheck1" class="custom-control-label">Remember password</label>
+                                    <label for="customCheck1" class="custom-control-label">{{ 'login.remember'|trans }}</label>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Log in</button>
+                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ 'login.log_in'|trans }}</button>
                                 <div class ="text-center w-100 mt-3">
-                                <p class="text-muted">Don't have a account? Create one <a href="/register" class="text-primary">Here</a></p>
+                                <p class="text-muted">{{ 'login.no_account'|trans }} <a href="/register" class="text-primary">{{ 'login.signup_link'|trans }}</a></p>
                                 </div>
                             </form>
                         </div>

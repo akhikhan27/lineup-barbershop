@@ -1,5 +1,5 @@
 {% extends 'base.twig' %}
-{% block title %}Home{% endblock %}
+{% block title %}{{ 'home.title'|trans }}{% endblock %}
 {% block content %}
     <body id="page-top">
         <!-- Masthead-->
@@ -8,8 +8,8 @@
                 <div class="d-flex justify-content-center">
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">Lineup</h1>
-                        <h2 class="text-white-50 mx-auto mt-2 mb-5">A barbershop appointment system.</h2>
-                        <a class="btn btn-primary" href="/services">Browse services</a>
+                        <h2 class="text-white-50 mx-auto mt-2 mb-5">{{ 'home.subtitle'|trans }}</h2>
+                        <a class="btn btn-primary" href="/services">{{ 'home.browse_services'|trans }}</a>
                     </div>
                 </div>
             </div>
@@ -19,12 +19,8 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8">
-                        <h2 class="text-white mb-4">About this website</h2>
-                        <p class="text-white-50">
-                           Lineup is a online barber shop appointment system.
-                            It's being developed as part of a school project.
-                            It allows users to make appointments and browse services at a single barbershop location.
-                        </p>
+                        <h2 class="text-white mb-4">{{ 'home.about_heading'|trans }}</h2>
+                        <p class="text-white-50">{{ 'home.about_text'|trans }}</p>
                     </div>
                 </div>
             </div>
@@ -37,9 +33,9 @@
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
                                 <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Address</h4>
+                                <h4 class="text-uppercase m-0">{{ 'home.address'|trans }}</h4>
                                 <hr class="my-4 mx-auto" />
-                                <div class="small text-black-50">123 Rue Street H1A 1AB</div>
+                                <div class="small text-black-50">{{ 'home.address_value'|trans }}</div>
                             </div>
                         </div>
                     </div>
@@ -47,9 +43,9 @@
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
                                 <i class="fas fa-envelope text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Email</h4>
+                                <h4 class="text-uppercase m-0">{{ 'home.email'|trans }}</h4>
                                 <hr class="my-4 mx-auto" />
-                                <div class="small text-black-50"><a href="#!">lineup-barbershop@gmail.com</a></div>
+                                <div class="small text-black-50"><a href="#!">{{ 'home.email_value'|trans }}</a></div>
                             </div>
                         </div>
                     </div>
@@ -57,9 +53,9 @@
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
                                 <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Phone</h4>
+                                <h4 class="text-uppercase m-0">{{ 'home.phone'|trans }}</h4>
                                 <hr class="my-4 mx-auto" />
-                                <div class="small text-black-50">(514)-123-4567</div>
+                                <div class="small text-black-50">{{ 'home.phone_value'|trans }}</div>
                             </div>
                         </div>
                     </div>
@@ -73,11 +69,11 @@
         <!-- Footer-->
         <footer class="footer bg-black small text-center text-white-50">
         <div class="container px-4 px-lg-5">
-            <h5 class="text-uppercase mb-4">Opening Hours</h5>
+            <h5 class="text-uppercase mb-4">{{ 'home.hours_heading'|trans }}</h5>
                 <ul class="list-unstyled text-white-50">
-                    <li class="d-flex justify-content-between"><span>Mon - Fri:</span> <span>1:00 - 8:00</span></li>
-                    <li class="d-flex justify-content-between"><span>Saturday:</span> <span>1:00 - 8:00</span></li>
-                    <li class="d-flex justify-content-between"><span>Sunday:</span> <span>1:00 - 6:00</span></li>
+                    <li class="d-flex justify-content-between"><span>{{ 'home.hours_mon_fri'|trans }}</span> <span>{{ 'home.hours_mon_fri_value'|trans }}</span></li>
+                    <li class="d-flex justify-content-between"><span>{{ 'home.hours_saturday'|trans }}</span> <span>{{ 'home.hours_saturday_value'|trans }}</span></li>
+                    <li class="d-flex justify-content-between"><span>{{ 'home.hours_sunday'|trans }}</span> <span>{{ 'home.hours_sunday_value'|trans }}</span></li>
                 </ul>
         </div>
         </footer>

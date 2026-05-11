@@ -18,23 +18,23 @@
         
         {{ page_id == 'dashboard' ? 'navbar-dark bg-dark' : 'navbar-light' }}" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="/">Home</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
+                <a class="navbar-brand" href="/">{{ 'nav.home'|trans }}</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="{{ 'nav.menu'|trans }}">
+                    {{ 'nav.menu'|trans }}
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         {% block navlinks %}
                         {% if session.user is defined and session.user.role == 'customer' %}
-                            <li class="nav-item"><a class="nav-link" href="/appointments">Appointments</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/appointments">{{ 'nav.appointments'|trans }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/logout">{{ 'nav.logout'|trans }}</a></li>
                         {% elseif session.user is defined and session.user.role == 'admin' %}
-                            <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/admin/dashboard">Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/logout">{{ 'nav.logout'|trans }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/admin/dashboard">{{ 'nav.dashboard'|trans }}</a></li>
                         {% else %}
-                            <li class="nav-item"><a class="nav-link" href="/login">Log in</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/register">Sign up</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/login">{{ 'nav.login'|trans }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/register">{{ 'nav.signup'|trans }}</a></li>
                         {% endif %}
                         {% endblock %}
                     </ul>

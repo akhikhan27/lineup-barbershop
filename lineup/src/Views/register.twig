@@ -1,5 +1,5 @@
 {% extends 'base.twig' %}
-{% block title %}Register{% endblock %}
+{% block title %}{{ 'register.title'|trans }}{% endblock %}
 {% block navlinks %}{% endblock %}
 {% block content %}
 <div class="container-fluid">
@@ -11,29 +11,32 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10 col-xl-7 mx-auto">
-                            <h3 class="display-4">Welcome to Lineup!</h3>
+                            <h3 class="display-4">{{ 'register.welcome'|trans }}</h3>
+                            {% if error is defined and error %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                            {% endif %}
                             <form action="/register" method="post">
                                 <div class="form-group mb-3">
-                                    <input id="inputEmail" name="email" type="email" placeholder="Email address" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <input id="inputEmail" name="email" type="email" placeholder="{{ 'register.email_placeholder'|trans }}" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input id="inputFirstName" name="firstName" type="text" placeholder="First Name" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <input id="inputFirstName" name="firstName" type="text" placeholder="{{ 'register.first_name_placeholder'|trans }}" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input id="inputLastName" name="lastName" type="text" placeholder="Last Name" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <input id="inputLastName" name="lastName" type="text" placeholder="{{ 'register.last_name_placeholder'|trans }}" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input id="inputPhoneNumber" name="phoneNumber" type="tel" placeholder="Phone Number" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <input id="inputPhoneNumber" name="phoneNumber" type="tel" placeholder="{{ 'register.phone_placeholder'|trans }}" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input id="inputPassword" name="password" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                    <input id="inputPassword" name="password" type="password" placeholder="{{ 'register.password_placeholder'|trans }}" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input id="inputConfirmPassword" name="confirmPassword" type="password" placeholder="Re-type Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                    <input id="inputConfirmPassword" name="confirmPassword" type="password" placeholder="{{ 'register.confirm_password_placeholder'|trans }}" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign up</button>
+                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ 'register.sign_up'|trans }}</button>
                                 <div class ="text-center w-100 mt-3">
-                                <p class="text-muted">Already have a account? Log in <a href="/login" class="text-primary">Here</a></p>                                
+                                <p class="text-muted">{{ 'register.has_account'|trans }} <a href="/login" class="text-primary">{{ 'register.login_link'|trans }}</a></p>                                
                                 </div>
                             </form>
                         </div>

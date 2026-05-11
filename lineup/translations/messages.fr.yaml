@@ -1,0 +1,133 @@
+nav:
+  home: Accueil
+  appointments: Rendez-vous
+  logout: Déconnexion
+  dashboard: Tableau de bord
+  login: Connexion
+  signup: Inscription
+  menu: Menu
+
+home:
+  title: Accueil
+  heading: Lineup
+  subtitle: Un système de rendez-vous pour barbier.
+  browse_services: Voir les services
+  about_heading: À propos
+  about_text: "Lineup est un système de rendez-vous en ligne pour salon de barbier. Il est développé dans le cadre d'un projet scolaire. Il permet aux utilisateurs de prendre rendez-vous et de parcourir les services d'un salon de barbier."
+  address: Adresse
+  address_value: 123 Rue Street H1A 1AB
+  email: Courriel
+  email_value: lineup-barbershop@gmail.com
+  phone: Téléphone
+  phone_value: "(514)-123-4567"
+  hours_heading: Heures d'ouverture
+  hours_mon_fri: "Lun - Ven :"
+  hours_mon_fri_value: "13:00 - 20:00"
+  hours_saturday: "Samedi :"
+  hours_saturday_value: "13:00 - 20:00"
+  hours_sunday: "Dimanche :"
+  hours_sunday_value: "13:00 - 18:00"
+
+login:
+  title: Connexion
+  welcome_back: Bon retour !
+  email_placeholder: Adresse courriel
+  password_placeholder: Mot de passe
+  remember: Se souvenir de moi
+  log_in: Se connecter
+  no_account: "Vous n'avez pas de compte ? Créez-en un"
+  signup_link: Ici
+
+register:
+  title: Inscription
+  welcome: Bienvenue chez Lineup !
+  email_placeholder: Adresse courriel
+  first_name_placeholder: Prénom
+  last_name_placeholder: Nom
+  phone_placeholder: Numéro de téléphone
+  password_placeholder: Mot de passe
+  confirm_password_placeholder: Confirmer le mot de passe
+  sign_up: S'inscrire
+  has_account: "Vous avez déjà un compte ? Connectez-vous"
+  login_link: Ici
+
+services:
+  title: Services
+  heading: Nos Services
+  search_placeholder: Rechercher des services...
+  edit: Modifier
+  delete: Supprimer
+  book: Réserver
+  no_results: Aucun service trouvé.
+
+book:
+  title: Réservation
+  heading: Réserver un rendez-vous
+  date_placeholder: Date du rendez-vous
+  select_time: Choisir un horaire
+  book: Réserver
+
+appointments:
+  title: Mes Rendez-vous
+  heading: Mes Rendez-vous
+  at: à
+  status_label: "Statut :"
+  leave_review: Laisser un avis
+  empty: Vous n'avez aucun rendez-vous pour le moment.
+  browse_services: Voir les services
+
+review:
+  title: Avis
+  heading: Laisser un avis
+  comment_label: Commentaire
+  comment_placeholder: Écrivez quelque chose...
+  submit: Laisser un avis
+
+admin:
+  dashboard:
+    title: Tableau de bord
+    sidebar_dashboard: Tableau de bord
+    sidebar_barbers: Barbiers
+    sidebar_appointments: Rendez-vous
+    sidebar_services: Services
+    barbers_heading: Barbiers
+    first_name: Prénom
+    last_name: Nom
+    bio: Bio
+    actions: Actions
+    edit: Modifier
+    delete: Supprimer
+    appointments_heading: Rendez-vous
+    date: Date
+    time: Heure
+    status: Statut
+    update_status: Mettre à jour
+    pending: En attente
+    confirmed: Confirmé
+    completed: Terminé
+    cancelled: Annulé
+    update: Mettre à jour
+  edit_service:
+    title: Modifier le service
+    heading: Modifier le service
+    service_name: Nom du service
+    description: Description
+    price: Prix
+    category: Catégorie
+    cancel: Annuler
+    save_changes: Enregistrer
+  edit_barber:
+    title: Modifier le barbier
+    heading: Modifier le barbier
+    first_name: Prénom du barbier
+    last_name: Nom du barbier
+    description: Description
+    cancel: Annuler
+    save_changes: Enregistrer
+
+auth:
+  error:
+    invalid_credentials: Courriel ou mot de passe incorrect.
+    invalid_email: Adresse courriel invalide
+    password_strength: "Le mot de passe doit contenir au moins 8 caractères avec une majuscule, une minuscule, un chiffre et un symbole."
+    email_taken: Cette adresse courriel est déjà utilisée.

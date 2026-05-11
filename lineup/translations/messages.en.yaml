@@ -1,0 +1,133 @@
+nav:
+  home: Home
+  appointments: Appointments
+  logout: Log out
+  dashboard: Dashboard
+  login: Log in
+  signup: Sign up
+  menu: Menu
+
+home:
+  title: Home
+  heading: Lineup
+  subtitle: A barbershop appointment system.
+  browse_services: Browse services
+  about_heading: About this website
+  about_text: "Lineup is an online barber shop appointment system. It's being developed as part of a school project. It allows users to make appointments and browse services at a single barbershop location."
+  address: Address
+  address_value: 123 Rue Street H1A 1AB
+  email: Email
+  email_value: lineup-barbershop@gmail.com
+  phone: Phone
+  phone_value: "(514)-123-4567"
+  hours_heading: Opening Hours
+  hours_mon_fri: "Mon - Fri:"
+  hours_mon_fri_value: "1:00 - 8:00"
+  hours_saturday: "Saturday:"
+  hours_saturday_value: "1:00 - 8:00"
+  hours_sunday: "Sunday:"
+  hours_sunday_value: "1:00 - 6:00"
+
+login:
+  title: Login
+  welcome_back: Welcome back!
+  email_placeholder: Email address
+  password_placeholder: Password
+  remember: Remember password
+  log_in: Log in
+  no_account: "Don't have an account? Create one"
+  signup_link: Here
+
+register:
+  title: Register
+  welcome: Welcome to Lineup!
+  email_placeholder: Email address
+  first_name_placeholder: First Name
+  last_name_placeholder: Last Name
+  phone_placeholder: Phone Number
+  password_placeholder: Password
+  confirm_password_placeholder: Re-type Password
+  sign_up: Sign up
+  has_account: "Already have an account? Log in"
+  login_link: Here
+
+services:
+  title: Services
+  heading: Our Services
+  search_placeholder: Search services...
+  edit: Edit
+  delete: Delete
+  book: Book
+  no_results: No services found.
+
+book:
+  title: Booking
+  heading: Book appointment
+  date_placeholder: Appointment Date
+  select_time: Select a time
+  book: Book
+
+appointments:
+  title: My Appointments
+  heading: My Appointments
+  at: at
+  status_label: "Status:"
+  leave_review: Leave Review
+  empty: You have no appointments booked yet.
+  browse_services: Browse Services
+
+review:
+  title: Review
+  heading: Leave a review
+  comment_label: Comment
+  comment_placeholder: Write something...
+  submit: Leave Review
+
+admin:
+  dashboard:
+    title: Admin Dashboard
+    sidebar_dashboard: Dashboard
+    sidebar_barbers: Barbers
+    sidebar_appointments: Appointments
+    sidebar_services: Services
+    barbers_heading: Barbers
+    first_name: First Name
+    last_name: Last Name
+    bio: Bio
+    actions: Actions
+    edit: Edit
+    delete: Delete
+    appointments_heading: Appointments
+    date: Date
+    time: Time
+    status: Status
+    update_status: Update Status
+    pending: Pending
+    confirmed: Confirmed
+    completed: Completed
+    cancelled: Cancelled
+    update: Update
+  edit_service:
+    title: Edit Service
+    heading: Edit Service
+    service_name: Service Name
+    description: Description
+    price: Price
+    category: Category
+    cancel: Cancel
+    save_changes: Save Changes
+  edit_barber:
+    title: Edit Barber
+    heading: Edit Barber
+    first_name: Barber First Name
+    last_name: Barber Last Name
+    description: Description
+    cancel: Cancel
+    save_changes: Save Changes
+
+auth:
+  error:
+    invalid_credentials: Invalid email or password.
+    invalid_email: Invalid email address
+    password_strength: "Password must be at least 8 characters and include upper, lower, number, and symbol."
+    email_taken: That email is already registered.
