@@ -33,8 +33,7 @@ return function (ContainerBuilder $containerBuilder) {
         PDO::class => function (ContainerInterface $c) {
             $settings = $c->get(SettingsInterface::class);
             $dbSettings = $settings->get('db');
-            $dsn = "mysql:host={$dbSettings['host']};dbname={$dbSettings['dbname']};charset=utf8";
-            return new PDO($dsn, $dbSettings['user'], $dbSettings['password']);
+            $dsn = "mysql:host={$dbSettings['host']};port={$dbSettings['port']};dbname={$dbSettings['dbname']};charset=utf8";            return new PDO($dsn, $dbSettings['user'], $dbSettings['password']);
         },
         Translator::class => function () {
             $translator = new Translator('en');
@@ -55,5 +54,6 @@ return function (ContainerBuilder $containerBuilder) {
         \Slim\Views\Twig::class => function (ContainerInterface $c) {
             return $c->get('view');
         },
+        
     ]);
 };
