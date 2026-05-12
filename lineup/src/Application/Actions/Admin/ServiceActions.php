@@ -38,8 +38,13 @@ class ServiceActions
         $price = $data['price'] ?? 0;
         $categoryId = $data['category_id'] ?? '';
 
-        $stmt = $this->pdo->prepare('INSERT INTO services (name,description,price,category_id) VALUES (?,?,?,?)');
-        $stmt->execute([$name, $description, $price, $categoryId]);
+        try {
+            $stmt = $this->pdo->prepare('INSERT INTO services (name,description,price,category_id) VALUES (?,?,?,?)');
+            $stmt->execute([$name, $description, $price, $categoryId]);
+            $_SESSION['flash'] = ['type' => 'success', 'message' => $this->translator->trans('flash.success.service_added')];
+        } catch (\Exception $e) {
+            $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('flash.error.service_add_failed')];
+        }
 
         return $response->withHeader('Location', '/services')->withStatus(302);
     }

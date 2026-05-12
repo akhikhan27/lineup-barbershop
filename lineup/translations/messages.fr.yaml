@@ -59,6 +59,7 @@ services:
   delete: Supprimer
   book: Réserver
   no_results: Aucun service trouvé.
+  add_service: Ajouter un service
 
 book:
   title: Réservation
@@ -96,6 +97,7 @@ admin:
     last_name: Nom
     bio: Bio
     actions: Actions
+    add_barber: Ajouter un barbier
     edit: Modifier
     delete: Supprimer
     appointments_heading: Rendez-vous
@@ -131,12 +133,14 @@ flash:
     appointment_booked: Rendez-vous réservé avec succès !
     review_created: Avis soumis avec succès !
     barber_added: Barbier ajouté avec succès !
+    service_added: Service ajouté avec succès !
     barber_updated: Barbier mis à jour avec succès !
     barber_deleted: Barbier supprimé avec succès !
     service_edited: Service mis à jour avec succès !
     service_deleted: Service supprimé avec succès !
   error:
     barber_add_failed: Échec de l'ajout du barbier. Veuillez réessayer.
+    service_add_failed: Échec de l'ajout du service. Veuillez réessayer.
     barber_update_failed: Échec de la mise à jour du barbier. Veuillez réessayer.
     barber_delete_failed: Échec de la suppression du barbier. Veuillez réessayer.
     service_edit_failed: Échec de la mise à jour du service. Veuillez réessayer.

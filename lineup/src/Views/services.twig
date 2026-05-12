@@ -6,6 +6,9 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-bold">{{ 'services.heading'|trans }}</h1>
+        {% if session.user is defined and session.user.role == 'admin' %}
+        <a href="/admin/services/add" class="btn btn-primary mt-3">{{ 'services.add_service'|trans }}</a>
+        {% endif %}
       </div>
     </div>
   </section>
@@ -32,7 +35,7 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                 {% if session.user is defined and session.user.role == 'admin' %}
-                  <a href="/admin/services" class="btn btn-sm btn-outline-secondary">{{ 'services.edit'|trans }}</a>
+                  <a href="/admin/services/edit/{{ service.id }}" class="btn btn-sm btn-outline-secondary">{{ 'services.edit'|trans }}</a>
                   <form action="/admin/services/delete/{{ service.id }}" method=post>
                     <button type="submit" class="btn btn-sm btn-outline-secondary">{{ 'services.delete'|trans }}</button>
                   </form>

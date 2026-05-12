@@ -59,6 +59,7 @@ services:
   delete: Delete
   book: Book
   no_results: No services found.
+  add_service: Add Service
 
 book:
   title: Booking
@@ -96,6 +97,7 @@ admin:
     last_name: Last Name
     bio: Bio
     actions: Actions
+    add_barber: Add Barber
     edit: Edit
     delete: Delete
     appointments_heading: Appointments
@@ -131,12 +133,14 @@ flash:
     appointment_booked: Appointment booked successfully!
     review_created: Review submitted successfully!
     barber_added: Barber added successfully!
+    service_added: Service added successfully!
     barber_updated: Barber updated successfully!
     barber_deleted: Barber deleted successfully!
     service_edited: Service updated successfully!
     service_deleted: Service deleted successfully!
   error:
     barber_add_failed: Failed to add barber. Please try again.
+    service_add_failed: Failed to add service. Please try again.
     barber_update_failed: Failed to update barber. Please try again.
     barber_delete_failed: Failed to delete barber. Please try again.
     service_edit_failed: Failed to update service. Please try again.
