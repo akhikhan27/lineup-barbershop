@@ -1,11 +1,10 @@
 <?php
 // Use environment variables (Railway) or fallback to local defaults
-$host = getenv('DB_HOST') ?: 'localhost';
-$dbname = getenv('DB_NAME') ?: 'lineup';
-$user = getenv('DB_USER') ?: 'lineup_user';
-$password = getenv('DB_PASSWORD') ?: 'lineup';
-// Railway usually provides a PORT variable as well
-$port = getenv('DB_PORT') ?: '3306';
+$host = 'shortline.proxy.rlwy.net';
+$port = '37105';
+$dbname = 'railway';
+$user = 'root';
+$password = 'EeOSLGovWMhnwSryXhohptXyRYaZWImU';
 
 try {
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8", $user, $password);
