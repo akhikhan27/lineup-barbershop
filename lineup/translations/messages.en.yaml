@@ -134,11 +134,13 @@ flash:
     barber_updated: Barber updated successfully!
     barber_deleted: Barber deleted successfully!
     service_edited: Service updated successfully!
+    service_deleted: Service deleted successfully!
   error:
     barber_add_failed: Failed to add barber. Please try again.
     barber_update_failed: Failed to update barber. Please try again.
     barber_delete_failed: Failed to delete barber. Please try again.
     service_edit_failed: Failed to update service. Please try again.
+    service_delete_failed: Failed to delete service. Please try again.
     review_create_failed: Failed to submit review. Please try again.
 
 auth:

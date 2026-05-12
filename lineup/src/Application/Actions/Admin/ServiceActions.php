@@ -27,7 +27,7 @@ class ServiceActions
         $stmt->execute();
         $services = $stmt->fetchAll();
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'admin/services.twig', ['services' => $services]);
+        return $view->render($response, '/services.twig', ['services' => $services]);
     }
 
     public function addService(Request $request, Response $response): Response
@@ -41,7 +41,7 @@ class ServiceActions
         $stmt = $this->pdo->prepare('INSERT INTO services (name,description,price,category_id) VALUES (?,?,?,?)');
         $stmt->execute([$name, $description, $price, $categoryId]);
 
-        return $response->withHeader('Location', '/admin/services')->withStatus(302);
+        return $response->withHeader('Location', '/services')->withStatus(302);
     }
 
     public function editService(Request $request, Response $response, array $args): Response
@@ -60,14 +60,19 @@ class ServiceActions
         } catch (\Exception $e) {
             $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('flash.error.service_edit_failed')];
         }
-        return $response->withHeader('Location', '/admin/services')->withStatus(302);
+        return $response->withHeader('Location', '/services')->withStatus(302);
     }
 
     public function deleteService(Request $request, Response $response, array $args): Response
     {
         $id = $args['id'];
-        $stmt = $this->pdo->prepare('DELETE FROM services WHERE id = ?');
-        $stmt->execute([$id]);
+        try {
+            $stmt = $this->pdo->prepare('DELETE FROM services WHERE id = ?');
+            $stmt->execute([$id]);
+            $_SESSION['flash'] = ['type' => 'success', 'message' => $this->translator->trans('flash.success.service_deleted')];
+        } catch (\Exception $e) {
+            $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('flash.error.service_delete_failed')];
+        }
         return $response->withHeader('Location', '/services')->withStatus(302);
     }
 
