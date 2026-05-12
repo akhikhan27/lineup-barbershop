@@ -1,5 +1,5 @@
 [phases.build]
-cmds = ["composer install --no-dev --optimize-autoloader", "install-php-extensions pdo_mysql"]
+cmds = ["composer install --no-dev --optimize-autoloader --ignore-platform-reqs"]
 
 [start]
 cmd = "php -S 0.0.0.0:$PORT -t public"

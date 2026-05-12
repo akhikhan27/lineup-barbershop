@@ -30,7 +30,9 @@
         "slim/slim": "^4.10",
         "slim/twig-view": "^3.4",
         "symfony/translation": "^5.4",
-        "symfony/yaml": "^5.4"
+        "symfony/yaml": "^5.4",
+        "ext-pdo_mysql": "*",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "jangregor/phpstan-prophecy": "^1.0.0",
