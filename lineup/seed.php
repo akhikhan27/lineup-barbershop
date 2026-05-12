@@ -7,7 +7,7 @@ $user = 'root';
 $password = 'EeOSLGovWMhnwSryXhohptXyRYaZWImU';
 
 try {
-    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8", $user, $password);
+    $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8;unix_socket=", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // ... rest of your code ...
 } catch (PDOException $e) {
