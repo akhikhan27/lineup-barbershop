@@ -35,7 +35,7 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS users (
     phoneNumber VARCHAR(20),
     email VARCHAR(150) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    2fa_secret VARCHAR(255),
+    tfa_secret VARCHAR(255),
     role ENUM('admin', 'customer') DEFAULT 'customer'
 )");
 
