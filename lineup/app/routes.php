@@ -79,6 +79,13 @@ return function (App $app) {
     $app->post('/register', [AuthActions::class, 'register']);
     $app->get('/logout', [AuthActions::class, 'logout']);
 
+    // 2FA routes
+    $app->get('/auth/2fa/verify', [AuthActions::class, 'showVerifyForm']);
+    $app->post('/auth/2fa/verify', [AuthActions::class, 'verify']);
+    $app->get('/auth/2fa/setup', [AuthActions::class, 'showSetupForm'])->add($userMiddleware);
+    $app->post('/auth/2fa/setup', [AuthActions::class, 'setup'])->add($userMiddleware);
+    $app->post('/auth/2fa/disable', [AuthActions::class, 'disable'])->add($userMiddleware);
+
 
     $app->group('/users', function (Group $group) {
         $group->get('', ListUsersAction::class);

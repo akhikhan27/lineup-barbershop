@@ -2,6 +2,7 @@
 
 namespace App\Application\Actions;
 
+use App\Service\TwoFactorService;
 use PDO;
 use PDOException;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -13,11 +14,13 @@ class AuthActions
 {
     private PDO $pdo;
     private Translator $translator;
+    private TwoFactorService $tfa;
 
-    public function __construct(PDO $pdo, Translator $translator)
+    public function __construct(PDO $pdo, Translator $translator, TwoFactorService $tfa)
     {
         $this->pdo = $pdo;
         $this->translator = $translator;
+        $this->tfa = $tfa;
     }
 
     public function login(Request $request, Response $response): Response
@@ -25,8 +28,6 @@ class AuthActions
         $data = $request->getParsedBody();
         $email = trim($data['email'] ?? '');
         $password = $data['password'] ?? '';
-        $error = null;
-        $role = $_SESSION['user']['role'] ?? 'customer';
 
         $stmt = $this->pdo->prepare('SELECT * FROM users WHERE email = ?');
         $stmt->execute([$email]);
@@ -34,6 +35,13 @@ class AuthActions
 
         if ($user && password_verify($password, $user['password'])) {
             session_regenerate_id(true);
+
+            if (!empty($user['tfa_secret'])) {
+                $_SESSION['2fa_user_id'] = $user['id'];
+                $_SESSION['2fa_user_data'] = $user;
+                return $response->withHeader('Location', '/auth/2fa/verify')->withStatus(302);
+            }
+
             $_SESSION['user'] = $user;
 
             if ($user['role'] === 'admin') {
@@ -54,7 +62,6 @@ class AuthActions
         $firstName = trim($data['firstName'] ?? '');
         $lastName = trim($data['lastName'] ?? '');
         $phoneNumber = trim($data['phoneNumber'] ?? '');
-        $error = null;
 
         $pattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$/';
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -89,5 +96,108 @@ class AuthActions
         }
         session_destroy();
         return $response->withHeader('Location', '/login')->withStatus(302);
+    }
+
+    public function showVerifyForm(Request $request, Response $response): Response
+    {
+        if (!isset($_SESSION['2fa_user_id'])) {
+            return $response->withHeader('Location', '/login')->withStatus(302);
+        }
+        $view = Twig::fromRequest($request);
+        return $view->render($response, '2fa-verify.twig');
+    }
+
+    public function verify(Request $request, Response $response): Response
+    {
+        if (!isset($_SESSION['2fa_user_id'])) {
+            return $response->withHeader('Location', '/login')->withStatus(302);
+        }
+
+        $data = $request->getParsedBody();
+        $code = trim($data['code'] ?? '');
+        $user = $_SESSION['2fa_user_data'];
+
+        if ($this->tfa->verifyCode($user['tfa_secret'], $code)) {
+            $_SESSION['user'] = $user;
+            unset($_SESSION['2fa_user_id'], $_SESSION['2fa_user_data']);
+
+            if ($user['role'] === 'admin') {
+                return $response->withHeader('Location', '/admin/dashboard')->withStatus(302);
+            } else {
+                return $response->withHeader('Location', '/')->withStatus(302);
+            }
+        }
+
+        $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('auth.2fa.invalid_code')];
+        return $response->withHeader('Location', '/auth/2fa/verify')->withStatus(302);
+    }
+
+    public function showSetupForm(Request $request, Response $response): Response
+    {
+        if (!isset($_SESSION['user'])) {
+            return $response->withHeader('Location', '/login')->withStatus(302);
+        }
+
+        $user = $_SESSION['user'];
+        $hasTfa = !empty($user['tfa_secret']);
+        $secret = $_SESSION['2fa_temp_secret'] ?? $this->tfa->generateSecret();
+        $_SESSION['2fa_temp_secret'] = $secret;
+
+        $qrCode = $this->tfa->getQrCodeUri($secret, $user['email']);
+
+        $view = Twig::fromRequest($request);
+        return $view->render($response, '2fa-setup.twig', [
+            'qr_code' => $qrCode,
+            'secret' => $secret,
+            'has_tfa' => $hasTfa,
+        ]);
+    }
+
+    public function setup(Request $request, Response $response): Response
+    {
+        if (!isset($_SESSION['user'])) {
+            return $response->withHeader('Location', '/login')->withStatus(302);
+        }
+
+        $data = $request->getParsedBody();
+        $code = trim($data['code'] ?? '');
+        $secret = $_SESSION['2fa_temp_secret'] ?? '';
+
+        if (!$secret) {
+            return $response->withHeader('Location', '/auth/2fa/setup')->withStatus(302);
+        }
+
+        if ($this->tfa->verifyCode($secret, $code)) {
+            $userId = $_SESSION['user']['id'];
+            $stmt = $this->pdo->prepare('UPDATE users SET tfa_secret = ? WHERE id = ?');
+            $stmt->execute([$secret, $userId]);
+
+            $_SESSION['user']['tfa_secret'] = $secret;
+            unset($_SESSION['2fa_temp_secret']);
+
+            $_SESSION['flash'] = ['type' => 'success', 'message' => $this->translator->trans('auth.2fa.enabled')];
+        } else {
+            $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('auth.2fa.invalid_code')];
+        }
+
+        return $response->withHeader('Location', '/auth/2fa/setup')->withStatus(302);
+    }
+
+    public function disable(Request $request, Response $response): Response
+    {
+        if (!isset($_SESSION['user'])) {
+            return $response->withHeader('Location', '/login')->withStatus(302);
+        }
+
+        $userId = $_SESSION['user']['id'];
+        $stmt = $this->pdo->prepare('UPDATE users SET tfa_secret = NULL WHERE id = ?');
+        $stmt->execute([$userId]);
+
+        $_SESSION['user']['tfa_secret'] = null;
+        unset($_SESSION['2fa_temp_secret']);
+
+        $_SESSION['flash'] = ['type' => 'success', 'message' => $this->translator->trans('auth.2fa.disabled')];
+
+        return $response->withHeader('Location', '/auth/2fa/setup')->withStatus(302);
     }
 }

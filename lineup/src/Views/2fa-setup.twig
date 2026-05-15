@@ -1,0 +1,37 @@
+{% extends 'base.twig' %}
+{% block title %}{{ 'auth.2fa.title'|trans }}{% endblock %}
+{% block content %}
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">{{ 'auth.2fa.setup_heading'|trans }}</h3>
+                    <p>{{ 'auth.2fa.setup_info'|trans }}</p>
+
+                    {% if qr_code %}
+                    <div class="text-center mb-4">
+                        <img src="{{ qr_code }}" alt="QR Code" class="img-fluid">
+                        <p class="mt-2 text-muted"><small>{{ secret }}</small></p>
+                    </div>
+                    {% endif %}
+
+                    <form action="/auth/2fa/setup" method="post">
+                        <div class="form-group mb-3">
+                            <input id="code" name="code" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="{{ 'auth.2fa.code_placeholder'|trans }}" required class="form-control form-control-lg text-center">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block w-100">{{ 'auth.2fa.enable'|trans }}</button>
+                    </form>
+
+                    {% if has_tfa %}
+                    <hr>
+                    <form action="/auth/2fa/disable" method="post">
+                        <button type="submit" class="btn btn-danger btn-block w-100" onclick="return confirm('{{ 'auth.2fa.disable_confirm'|trans }}')">{{ 'auth.2fa.disable'|trans }}</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

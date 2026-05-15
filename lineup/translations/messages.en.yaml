@@ -153,3 +153,18 @@ auth:
     invalid_email: Invalid email address
     password_strength: "Password must be at least 8 characters and include upper, lower, number, and symbol."
     email_taken: That email is already registered.
+  2fa:
+    title: Two-Factor Authentication
+    setup_heading: Set Up Two-Factor Authentication
+    setup_info: Scan the QR code below with your authenticator app (e.g. Google Authenticator, Authy), then enter the verification code.
+    verify_heading: Two-Factor Authentication
+    verify_info: Enter the 6-digit code from your authenticator app.
+    code_placeholder: "000000"
+    enable: Enable 2FA
+    disable: Disable 2FA
+    disable_confirm: Are you sure you want to disable two-factor authentication?
+    disabled: Two-factor authentication has been disabled.
+    enabled: Two-factor authentication has been enabled.
+    verify: Verify
+    invalid_code: Invalid verification code. Please try again.
+    setup_required: Please enter your 2FA code to complete login.

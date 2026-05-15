@@ -24,15 +24,16 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
         "monolog/monolog": "^2.8",
         "php-di/php-di": "^6.4",
+        "robthree/twofactorauth": "^3.0",
         "slim/psr7": "^1.5",
         "slim/slim": "^4.10",
         "slim/twig-view": "^3.4",
         "symfony/translation": "^5.4",
-        "symfony/yaml": "^5.4",
-        "ext-pdo_mysql": "*",
-        "ext-pdo": "*"
+        "symfony/yaml": "^5.4"
     },
     "require-dev": {
         "jangregor/phpstan-prophecy": "^1.0.0",

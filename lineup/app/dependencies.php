@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Application\Settings\SettingsInterface;
+use App\Service\TwoFactorService;
 use App\Service\UploadService;
 use App\Twig\TranslationExtension;
 use DI\ContainerBuilder;
@@ -44,6 +45,9 @@ return function (ContainerBuilder $containerBuilder) {
         },
         UploadService::class => function () {
             return new UploadService(__DIR__ . '/../public/uploads/barbers');
+        },
+        TwoFactorService::class => function () {
+            return new TwoFactorService();
         },
         'view' => function (ContainerInterface $c) {
             $twig = \Slim\Views\Twig::create(__DIR__ . '/../src/Views', ['cache' => false]);

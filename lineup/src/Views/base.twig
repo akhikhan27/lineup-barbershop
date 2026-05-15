@@ -28,8 +28,10 @@
                         {% block navlinks %}
                         {% if session.user is defined and session.user.role == 'customer' %}
                             <li class="nav-item"><a class="nav-link" href="/appointments">{{ 'nav.appointments'|trans }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/auth/2fa/setup">2FA</a></li>
                             <li class="nav-item"><a class="nav-link" href="/logout">{{ 'nav.logout'|trans }}</a></li>
                         {% elseif session.user is defined and session.user.role == 'admin' %}
+                            <li class="nav-item"><a class="nav-link" href="/auth/2fa/setup">2FA</a></li>
                             <li class="nav-item"><a class="nav-link" href="/logout">{{ 'nav.logout'|trans }}</a></li>
                             <li class="nav-item"><a class="nav-link" href="/admin/dashboard">{{ 'nav.dashboard'|trans }}</a></li>
                         {% else %}

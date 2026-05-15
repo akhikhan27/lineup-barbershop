@@ -153,3 +153,18 @@ auth:
     invalid_email: Adresse courriel invalide
     password_strength: "Le mot de passe doit contenir au moins 8 caractères avec une majuscule, une minuscule, un chiffre et un symbole."
     email_taken: Cette adresse courriel est déjà utilisée.
+  2fa:
+    title: Authentification à deux facteurs
+    setup_heading: Configurer l'authentification à deux facteurs
+    setup_info: Scannez le code QR ci-dessous avec votre application d'authentification (ex. Google Authenticator, Authy), puis entrez le code de vérification.
+    verify_heading: Authentification à deux facteurs
+    verify_info: Entrez le code à 6 chiffres de votre application d'authentification.
+    code_placeholder: "000000"
+    enable: Activer 2FA
+    disable: Désactiver 2FA
+    disable_confirm: Êtes-vous sûr de vouloir désactiver l'authentification à deux facteurs ?
+    disabled: L'authentification à deux facteurs a été désactivée.
+    enabled: L'authentification à deux facteurs a été activée.
+    verify: Vérifier
+    invalid_code: Code de vérification invalide. Veuillez réessayer.
+    setup_required: Veuillez entrer votre code 2FA pour terminer la connexion.
