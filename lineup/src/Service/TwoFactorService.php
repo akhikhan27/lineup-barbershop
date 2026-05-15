@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use RobThree\Auth\Providers\Qr\ImageChartsQRCodeProvider;
 use RobThree\Auth\TwoFactorAuth;
 
 class TwoFactorService
@@ -10,7 +11,7 @@ class TwoFactorService
 
     public function __construct()
     {
-        $this->tfa = new TwoFactorAuth('Lineup Barbershop');
+        $this->tfa = new TwoFactorAuth(new ImageChartsQRCodeProvider(), 'Lineup Barbershop');
     }
 
     public function generateSecret(): string
