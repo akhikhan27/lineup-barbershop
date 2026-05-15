@@ -80,12 +80,12 @@ Then open `http://localhost:8000` in your browser.
 
 **For production:**
 
-Point your web server (Apache or Nginx) to the `lineup/public/` directory. Make sure your server is configured to route requests through `index.php` (this is standard for Slim Framework apps).
+Point your web server (Apache or Nginx) to the `lineup/public/` directory. Make sure your server is configured to route requests through `index.php`.
 
 ## Next Steps
 
 - Configure your web server with a proper domain
-- Set up HTTPS with Let's Encrypt
+- Set up HTTPS 
 - Configure proper file permissions for your server user
 - Keep dependencies updated with `composer update`
 
