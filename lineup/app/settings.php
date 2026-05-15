@@ -22,11 +22,11 @@ return function (ContainerBuilder $containerBuilder) {
                     'level' => Logger::DEBUG,
                 ],
                'db' => [
-                'host'     => $_ENV['DB_HOST'] ?? 'localhost',
-                'dbname'   => $_ENV['DB_NAME'] ?? 'lineup',
-                'user'     => $_ENV['DB_USER'] ?? 'lineup_user',
-                'password' => $_ENV['DB_PASSWORD'] ?? 'yourpassword',
-                'port'     => $_ENV['DB_PORT'] ?? '3306',
+                'host'     => getenv('DB_HOST') ?: 'shortline.proxy.rlwy.net',
+                'dbname'   => getenv('DB_NAME') ?: 'railway',
+                'user'     => getenv('DB_USER') ?: 'root',
+                'password' => getenv('DB_PASSWORD') ?: 'EeOSLGovWMhnwSryXhohptXyRYaZWImU',
+                'port'     => getenv('DB_PORT') ?: '37105',
                 ],
             ]);
         }
