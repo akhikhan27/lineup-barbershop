@@ -23,18 +23,49 @@
                                     <input id="inputLastName" name="lastName" type="text" placeholder="{{ 'register.last_name_placeholder'|trans }}" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input id="inputPhoneNumber" name="phoneNumber" type="tel" placeholder="{{ 'register.phone_placeholder'|trans }}" required="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <input id="inputPhoneNumber" name="phoneNumber" type="tel" inputmode="numeric" pattern="[0-9+ \(\)-]{7,20}" placeholder="{{ 'register.phone_placeholder'|trans }}" required="" maxlength="20" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <small class="text-muted">e.g. +1 (555) 123-4567</small>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input id="inputPassword" name="password" type="password" placeholder="{{ 'register.password_placeholder'|trans }}" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                    <input id="inputPassword" name="password" type="password" placeholder="{{ 'register.password_placeholder'|trans }}" required="" maxlength="128" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <small class="text-muted">Min 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 symbol</small>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <input id="inputConfirmPassword" name="confirmPassword" type="password" placeholder="{{ 'register.confirm_password_placeholder'|trans }}" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                    <input id="inputConfirmPassword" name="confirmPassword" type="password" placeholder="{{ 'register.confirm_password_placeholder'|trans }}" required="" maxlength="128" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <small id="passwordMatchFeedback" class=""></small>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">{{ 'register.sign_up'|trans }}</button>
                                 <div class ="text-center w-100 mt-3">
                                 <p class="text-muted">{{ 'register.has_account'|trans }} <a href="/login" class="text-primary">{{ 'register.login_link'|trans }}</a></p>                                
                                 </div>
+                                <script>
+                                (function() {
+                                    var pwd = document.getElementById('inputPassword');
+                                    var confirm = document.getElementById('inputConfirmPassword');
+                                    var feedback = document.getElementById('passwordMatchFeedback');
+                                    var phone = document.getElementById('inputPhoneNumber');
+                                    function checkMatch() {
+                                        if (confirm.value === '') {
+                                            feedback.textContent = '';
+                                            feedback.className = '';
+                                        } else if (pwd.value === confirm.value) {
+                                            feedback.textContent = 'Passwords match';
+                                            feedback.className = 'text-success';
+                                        } else {
+                                            feedback.textContent = 'Passwords do not match';
+                                            feedback.className = 'text-danger';
+                                        }
+                                    }
+                                    function stripNonDigits(e) {
+                                        var start = e.selectionStart;
+                                        phone.value = phone.value.replace(/[^0-9+\-() ]/g, '');
+                                        e.selectionStart = e.selectionEnd = start;
+                                    }
+                                    pwd.addEventListener('input', checkMatch);
+                                    confirm.addEventListener('input', checkMatch);
+                                    phone.addEventListener('input', stripNonDigits);
+                                })();
+                                </script>
                             </form>
                         </div>
                     </div>

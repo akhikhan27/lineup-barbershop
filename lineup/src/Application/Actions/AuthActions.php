@@ -67,8 +67,18 @@ class AuthActions
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('auth.error.invalid_email')];
             return $response->withHeader('Location', '/register')->withStatus(302);
-        } elseif (!preg_match($pattern, $password)) {
+        }
+        if ($password !== ($data['confirmPassword'] ?? '')) {
+            $_SESSION['flash'] = ['type' => 'error', 'message' => 'Passwords do not match'];
+            return $response->withHeader('Location', '/register')->withStatus(302);
+        }
+        if (!preg_match($pattern, $password)) {
             $_SESSION['flash'] = ['type' => 'error', 'message' => $this->translator->trans('auth.error.password_strength')];
+            return $response->withHeader('Location', '/register')->withStatus(302);
+        }
+        $digitsOnly = preg_replace('/[^0-9]/', '', $phoneNumber);
+        if (strlen($digitsOnly) < 7 || strlen($digitsOnly) > 15) {
+            $_SESSION['flash'] = ['type' => 'error', 'message' => 'Invalid phone number format'];
             return $response->withHeader('Location', '/register')->withStatus(302);
         }
         $hash = password_hash($password, PASSWORD_DEFAULT);
